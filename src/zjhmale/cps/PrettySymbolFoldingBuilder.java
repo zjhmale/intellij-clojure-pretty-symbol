@@ -34,6 +34,23 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
     }
 
 
+    public static boolean isDelimiterMatch(String text, int start) {
+        String nextChar = "";
+        int leftCount = 0;
+        int rightCount = 0;
+        while (!nextChar.equals("\n") && start < text.length()) {
+            nextChar = text.substring(start, start + 1);
+            if (nextChar.equals("(")) {
+                leftCount++;
+            }
+            if (nextChar.equals(")")) {
+                rightCount++;
+            }
+            start++;
+        }
+        return rightCount == (leftCount + 1);
+    }
+
     @NotNull
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull final ASTNode node, @NotNull final Document document) {
@@ -47,6 +64,7 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
             int rangeStart = nodeRange.getStartOffset() + matcher.start();
             int rangeEnd = nodeRange.getStartOffset() + matcher.end();
             String pretty = prettySymbolMaps.get(key);
+            boolean shouldFold = true;
             if (key.startsWith("(")) {
                 rangeStart += 1;
             }
@@ -56,10 +74,16 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
                     pretty = prettySymbolMaps.get("(->>");
                     rangeEnd += 1;
                 }
+                shouldFold = isDelimiterMatch(text, rangeStart);
+            }
+            if (key.equals("not=")) {
+                shouldFold = isDelimiterMatch(text, rangeStart);
             }
 
-            final TextRange range = TextRange.create(rangeStart, rangeEnd);
-            descriptors.add(new PrettySymbolFoldingDescriptor(node, range, null, pretty, true));
+            if (shouldFold) {
+                final TextRange range = TextRange.create(rangeStart, rangeEnd);
+                descriptors.add(new PrettySymbolFoldingDescriptor(node, range, null, pretty, true));
+            }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
     }
