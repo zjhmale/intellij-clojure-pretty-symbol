@@ -48,7 +48,7 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
             }
             start++;
         }
-        return rightCount == (leftCount + 1);
+        return rightCount > leftCount;
     }
 
     @NotNull
@@ -75,9 +75,11 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
                     rangeEnd += 1;
                 }
                 shouldFold = isDelimiterMatch(text, rangeStart);
+                System.out.println("(-> " + shouldFold);
             }
             if (key.equals("not=")) {
                 shouldFold = isDelimiterMatch(text, rangeStart);
+                System.out.println("not= " + shouldFold);
             }
 
             if (shouldFold) {
