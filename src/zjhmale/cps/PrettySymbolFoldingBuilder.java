@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * Created by zjh on 2016/2/19.
  */
 public class PrettySymbolFoldingBuilder implements FoldingBuilder {
-    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(defn|#\\(|#\\{");
+    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(defn|not=|#\\(|#\\{");
     private static final HashMap<String, String> prettySymbolMaps;
 
     static {
@@ -28,6 +28,7 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
         prettySymbolMaps.put("(defn", "ƒ");
         prettySymbolMaps.put("(->", "→");
         prettySymbolMaps.put("(->>", "⇉");
+        prettySymbolMaps.put("not=", "≠");
         prettySymbolMaps.put("#(", "λ(");
         prettySymbolMaps.put("#{", "∈{");
     }
