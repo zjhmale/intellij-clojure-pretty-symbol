@@ -26,7 +26,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <lang.foldingBuilder language="Clojure"
-                         implementationClass="zjhmale.cps.PrettySymbolFoldingBuilder"/>
+                         implementationClass="zjhmale.cps.CPSFoldingBuilder"/>
 
   </extensions>
 

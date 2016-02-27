@@ -10,12 +10,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by zjh on 2016/2/19.
  */
-public class PrettySymbolFoldingDescriptor extends FoldingDescriptor {
+public class CPSFoldingDescriptor extends FoldingDescriptor {
 
     private final String foldedText;
     private final boolean isNonExpandable;
 
-    public PrettySymbolFoldingDescriptor(final ASTNode node, final TextRange range, final FoldingGroup group, @NotNull final String name, final boolean isNonExpandable) {
+    public CPSFoldingDescriptor(final ASTNode node, final TextRange range, final FoldingGroup group, @NotNull final String name, final boolean isNonExpandable) {
         super(node, range, group);
         this.foldedText = name;
         this.isNonExpandable = isNonExpandable;
