@@ -28,6 +28,9 @@
     <lang.foldingBuilder language="Clojure"
                          implementationClass="zjhmale.cps.CPSFoldingBuilder"/>
 
+    <applicationConfigurable implementation="zjhmale.cps.setting.CPSConfigurable"/>
+    <applicationService serviceInterface="zjhmale.cps.setting.CPSSettings"
+                        serviceImplementation="zjhmale.cps.setting.CPSSettings"/>
   </extensions>
 
   <application-components>

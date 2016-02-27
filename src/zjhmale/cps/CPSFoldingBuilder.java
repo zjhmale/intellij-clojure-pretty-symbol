@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import zjhmale.cps.setting.CPSSettings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,16 +56,16 @@ public class CPSFoldingBuilder implements FoldingBuilder {
     @NotNull
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull final ASTNode node, @NotNull final Document document) {
+        CPSSettings settings = CPSSettings.getInstance();
         List<FoldingDescriptor> descriptors = new ArrayList<FoldingDescriptor>();
         final String text = node.getText();
         final Matcher matcher = symbolPattern.matcher(text);
 
         while (matcher.find()) {
-            final String key = text.substring(matcher.start(), matcher.end());
+            String key = text.substring(matcher.start(), matcher.end());
             final TextRange nodeRange = node.getTextRange();
             int rangeStart = nodeRange.getStartOffset() + matcher.start();
             int rangeEnd = nodeRange.getStartOffset() + matcher.end();
-            String pretty = prettySymbolMaps.get(key);
             boolean shouldFold = true;
             if (key.startsWith("(")) {
                 rangeStart += 1;
@@ -75,7 +76,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     shouldFold = false;
                 }
                 if (nextChar.equals("n")) {
-                    pretty = prettySymbolMaps.get("(defn");
+                    key = "(defn";
                     rangeEnd += 1;
                     shouldFold = true;
                 }
@@ -83,7 +84,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
             if (key.startsWith("(->")) {
                 String nextChar = text.substring(rangeEnd, rangeEnd + 1);
                 if (nextChar.equals(">")) {
-                    pretty = prettySymbolMaps.get("(->>");
+                    key = "(->>";
                     rangeEnd += 1;
                 }
                 shouldFold = isDelimiterMatch(text, rangeStart);
@@ -92,7 +93,28 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 shouldFold = isDelimiterMatch(text, rangeStart);
             }
 
+            if (key.equals("(def")) {
+                shouldFold = settings.turnOnDef;
+            } else if (key.equals("(defn")) {
+                shouldFold = settings.turnOnDefn;
+            } else if (key.equals("(fn")) {
+                shouldFold = settings.turnOnFn;
+            } else if (key.equals("(partial")) {
+                shouldFold = settings.turnOnPartial;
+            } else if (key.equals("(->")) {
+                shouldFold = settings.turnOnThreadFirst;
+            } else if (key.equals("(->>")) {
+                shouldFold = settings.turnOnThreadLast;
+            } else if (key.equals("not=")) {
+                shouldFold = settings.turnOnNotEqual;
+            } else if (key.equals("#(")) {
+                shouldFold = settings.turnOnLambda;
+            } else if (key.equals("#{")) {
+                shouldFold = settings.turnOnSet;
+            }
+
             if (shouldFold) {
+                String pretty = prettySymbolMaps.get(key);
                 final TextRange range = TextRange.create(rangeStart, rangeEnd);
                 descriptors.add(new CPSFoldingDescriptor(node, range, null, pretty, true));
             }
