@@ -18,13 +18,14 @@ import java.util.regex.Pattern;
  * Created by zjh on 2016/2/19.
  */
 public class PrettySymbolFoldingBuilder implements FoldingBuilder {
-    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(defn|not=|#\\(|#\\{");
+    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|#\\(|#\\{");
     private static final HashMap<String, String> prettySymbolMaps;
 
     static {
         prettySymbolMaps = new HashMap<String, String>();
         prettySymbolMaps.put("(fn", "λ");
         prettySymbolMaps.put("(partial", "Ƥ");
+        prettySymbolMaps.put("(def", "→");
         prettySymbolMaps.put("(defn", "ƒ");
         prettySymbolMaps.put("(->", "→");
         prettySymbolMaps.put("(->>", "⇉");
@@ -68,6 +69,17 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
             if (key.startsWith("(")) {
                 rangeStart += 1;
             }
+            if (key.startsWith("(def")) {
+                String nextChar = text.substring(rangeEnd, rangeEnd + 1);
+                if (!nextChar.equals(" ")) {
+                    shouldFold = false;
+                }
+                if (nextChar.equals("n")) {
+                    pretty = prettySymbolMaps.get("(defn");
+                    rangeEnd += 1;
+                    shouldFold = true;
+                }
+            }
             if (key.startsWith("(->")) {
                 String nextChar = text.substring(rangeEnd, rangeEnd + 1);
                 if (nextChar.equals(">")) {
@@ -75,11 +87,9 @@ public class PrettySymbolFoldingBuilder implements FoldingBuilder {
                     rangeEnd += 1;
                 }
                 shouldFold = isDelimiterMatch(text, rangeStart);
-                System.out.println("(-> " + shouldFold);
             }
             if (key.equals("not=")) {
                 shouldFold = isDelimiterMatch(text, rangeStart);
-                System.out.println("not= " + shouldFold);
             }
 
             if (shouldFold) {
