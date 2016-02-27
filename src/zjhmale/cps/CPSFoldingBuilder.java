@@ -70,6 +70,27 @@ public class CPSFoldingBuilder implements FoldingBuilder {
             if (key.startsWith("(")) {
                 rangeStart += 1;
             }
+
+            if (key.equals("(def")) {
+                shouldFold = settings.turnOnDef;
+            } else if (key.equals("(defn")) {
+                shouldFold = settings.turnOnDefn;
+            } else if (key.equals("(fn")) {
+                shouldFold = settings.turnOnFn;
+            } else if (key.equals("(partial")) {
+                shouldFold = settings.turnOnPartial;
+            } else if (key.equals("(->")) {
+                shouldFold = settings.turnOnThreadFirst;
+            } else if (key.equals("(->>")) {
+                shouldFold = settings.turnOnThreadLast;
+            } else if (key.equals("not=")) {
+                shouldFold = settings.turnOnNotEqual;
+            } else if (key.equals("#(")) {
+                shouldFold = settings.turnOnLambda;
+            } else if (key.equals("#{")) {
+                shouldFold = settings.turnOnSet;
+            }
+
             if (key.startsWith("(def")) {
                 String nextChar = text.substring(rangeEnd, rangeEnd + 1);
                 if (!nextChar.equals(" ")) {
@@ -91,26 +112,6 @@ public class CPSFoldingBuilder implements FoldingBuilder {
             }
             if (key.equals("not=")) {
                 shouldFold = isDelimiterMatch(text, rangeStart);
-            }
-
-            if (key.equals("(def")) {
-                shouldFold = settings.turnOnDef;
-            } else if (key.equals("(defn")) {
-                shouldFold = settings.turnOnDefn;
-            } else if (key.equals("(fn")) {
-                shouldFold = settings.turnOnFn;
-            } else if (key.equals("(partial")) {
-                shouldFold = settings.turnOnPartial;
-            } else if (key.equals("(->")) {
-                shouldFold = settings.turnOnThreadFirst;
-            } else if (key.equals("(->>")) {
-                shouldFold = settings.turnOnThreadLast;
-            } else if (key.equals("not=")) {
-                shouldFold = settings.turnOnNotEqual;
-            } else if (key.equals("#(")) {
-                shouldFold = settings.turnOnLambda;
-            } else if (key.equals("#{")) {
-                shouldFold = settings.turnOnSet;
             }
 
             if (shouldFold) {
