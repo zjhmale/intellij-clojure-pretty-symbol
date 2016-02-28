@@ -1,10 +1,10 @@
 ## Clojure Pretty Symbol Plugin
 
-![](./pics/snapshot.jpg)
+![](./pics/snapshot.gif)
 
 ## Configuration
 
-* it's better to clear Foreground and Background color for Folded test.
+* it's better to clear Foreground and Background color for Folded text.
 
 ![](./pics/configfold.png)
 
