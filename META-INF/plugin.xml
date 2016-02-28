@@ -5,13 +5,14 @@
   <vendor email="zjhmale@gmail.com" url="https://github.com/zjhmale">zjhmale</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      Pretty symbols for your Clojure development with IntelliJ IDEA-based IDEs
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      <p>1.0:</p>
+      <ul>
+        <li>Support for Java and Clojure Programming Language</li>
+      </ul>
     ]]>
   </change-notes>
 
