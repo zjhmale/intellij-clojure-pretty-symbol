@@ -11,7 +11,7 @@
   <change-notes><![CDATA[
       <p>1.0:</p>
       <ul>
-        <li>Support for Java and Clojure Programming Language</li>
+        <li>Pretty symbols for Clojure Programming Language</li>
       </ul>
     ]]>
   </change-notes>
