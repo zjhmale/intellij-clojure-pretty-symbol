@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import zjhmale.cps.setting.CPSSettings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,6 +22,8 @@ import java.util.regex.Pattern;
 public class CPSFoldingBuilder implements FoldingBuilder {
     private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|#\\(|#\\{");
     private static final HashMap<String, String> prettySymbolMaps;
+    private static final String[] openDelimiters = new String[]{"(", "{", "["};
+    private static final String[] closeDelimiters = new String[]{")", "}", "]"};
 
     static {
         prettySymbolMaps = new HashMap<String, String>();
@@ -35,17 +38,29 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         prettySymbolMaps.put("#{", "∈{");
     }
 
+    private static boolean isContainOpenDelimiter(String text, int start) {
+        boolean contain = false;
+        String nextChar = "";
+        while (!nextChar.equals("\n") && start < text.length()) {
+            nextChar = text.substring(start, start + 1);
+            if (Arrays.asList(openDelimiters).contains(nextChar)) {
+                contain = true;
+            }
+            start++;
+        }
+        return contain;
+    }
 
-    public static boolean isDelimiterMatch(String text, int start) {
+    private static boolean isDelimiterMatch(String text, int start) {
         String nextChar = "";
         int leftCount = 0;
         int rightCount = 0;
         while (!nextChar.equals("\n") && start < text.length()) {
             nextChar = text.substring(start, start + 1);
-            if (nextChar.equals("(")) {
+            if (Arrays.asList(openDelimiters).contains(nextChar)) {
                 leftCount++;
             }
-            if (nextChar.equals(")")) {
+            if (Arrays.asList(closeDelimiters).contains(nextChar)) {
                 rightCount++;
             }
             start++;
@@ -93,6 +108,11 @@ public class CPSFoldingBuilder implements FoldingBuilder {
 
             if (key.startsWith("(def")) {
                 String nextChar = text.substring(rangeEnd, rangeEnd + 1);
+                if (nextChar.equals(" ")) {
+                    if (isContainOpenDelimiter(text, rangeStart)) {
+                        shouldFold = isDelimiterMatch(text, rangeStart);
+                    }
+                }
                 if (!nextChar.equals(" ")) {
                     shouldFold = false;
                 }
