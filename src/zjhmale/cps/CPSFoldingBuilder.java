@@ -29,7 +29,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         prettySymbolMaps = new HashMap<String, String>();
         prettySymbolMaps.put("(fn", "λ");
         prettySymbolMaps.put("(partial", "Ƥ");
-        prettySymbolMaps.put("(def", "→");
+        prettySymbolMaps.put("(def", "≡");
         prettySymbolMaps.put("(defn", "ƒ");
         prettySymbolMaps.put("(->", "→");
         prettySymbolMaps.put("(->>", "⇉");
