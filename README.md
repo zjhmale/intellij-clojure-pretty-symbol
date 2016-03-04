@@ -1,5 +1,9 @@
 ## Clojure Pretty Symbol Plugin
 
+https://plugins.jetbrains.com/plugin/8224
+
+## Snapshots
+
 ![](./pics/snapshot.gif)
 
 ## Configuration
