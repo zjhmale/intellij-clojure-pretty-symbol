@@ -6,6 +6,12 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/snapshot.gif)
 
+## Shortcuts
+
+* ⇧⌘- (Collapse All)
+
+* ⇧⌘+ (Expand All)
+
 ## Configuration
 
 * it's better to clear Foreground and Background color for Folded text.
