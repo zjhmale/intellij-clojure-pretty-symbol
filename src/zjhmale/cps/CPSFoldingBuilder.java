@@ -36,6 +36,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         prettySymbolMaps.put("not=", "≠");
         prettySymbolMaps.put("#(", "λ(");
         prettySymbolMaps.put("#{", "∈{");
+        prettySymbolMaps.put("#{}", "∅");
     }
 
     private static boolean isContainOpenDelimiter(String text, int start) {
@@ -81,7 +82,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
             final TextRange nodeRange = node.getTextRange();
             int rangeStart = nodeRange.getStartOffset() + matcher.start();
             int rangeEnd = nodeRange.getStartOffset() + matcher.end();
-            boolean shouldFold = true;
+            boolean shouldFold = false;
             if (key.startsWith("(")) {
                 rangeStart += 1;
             }
@@ -112,13 +113,21 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     rangeEnd += 1;
                     shouldFold = settings.turnOnThreadLast;
                 }
-                shouldFold = settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart);
+                if (nextChar.equals(" ")) {
+                    shouldFold = settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart);
+                }
             } else if (key.equals("not=")) {
                 shouldFold = settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart);
             } else if (key.equals("#(")) {
                 shouldFold = settings.turnOnLambda;
             } else if (key.equals("#{")) {
-                shouldFold = settings.turnOnSet;
+                if (nextChar.equals("}")) {
+                    key = "#{}";
+                    rangeEnd += 1;
+                    shouldFold = settings.turnOnEmptySet;
+                } else {
+                    shouldFold = settings.turnOnSet;
+                }
             }
 
             if (shouldFold) {

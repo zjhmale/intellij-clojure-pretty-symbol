@@ -16,6 +16,7 @@ public class CPSSettingsForm {
     private JCheckBox prettyNotEqualCheckBox;
     private JCheckBox prettyPartialCheckBox;
     private JCheckBox prettySetCheckBox;
+    private JCheckBox prettyEmptySetCheckBox;
     private JCheckBox prettyThreadFirstCheckBox;
     private JCheckBox prettyThreadLastCheckBox;
 
@@ -29,6 +30,7 @@ public class CPSSettingsForm {
         prettyNotEqualCheckBox.setSelected(true);
         prettyPartialCheckBox.setSelected(true);
         prettySetCheckBox.setSelected(true);
+        prettyEmptySetCheckBox.setSelected(true);
         prettyThreadFirstCheckBox.setSelected(true);
         prettyThreadLastCheckBox.setSelected(true);
 
@@ -67,6 +69,10 @@ public class CPSSettingsForm {
         return prettySetCheckBox.isSelected();
     }
 
+    public boolean turnOnEmptySet() {
+        return prettyEmptySetCheckBox.isSelected();
+    }
+
     public boolean turnOnThreadFirst() {
         return prettyThreadFirstCheckBox.isSelected();
     }
@@ -83,6 +89,7 @@ public class CPSSettingsForm {
                 || prettyNotEqualCheckBox.isSelected() != settings.turnOnNotEqual
                 || prettyPartialCheckBox.isSelected() != settings.turnOnPartial
                 || prettySetCheckBox.isSelected() != settings.turnOnSet
+                || prettyEmptySetCheckBox.isSelected() != settings.turnOnEmptySet
                 || prettyThreadFirstCheckBox.isSelected() != settings.turnOnThreadFirst
                 || prettyThreadLastCheckBox.isSelected() != settings.turnOnThreadLast;
     }
@@ -95,6 +102,7 @@ public class CPSSettingsForm {
         prettyNotEqualCheckBox.setSelected(settings.turnOnNotEqual);
         prettyPartialCheckBox.setSelected(settings.turnOnPartial);
         prettySetCheckBox.setSelected(settings.turnOnSet);
+        prettyEmptySetCheckBox.setSelected(settings.turnOnEmptySet);
         prettyThreadFirstCheckBox.setSelected(settings.turnOnThreadFirst);
         prettyThreadLastCheckBox.setSelected(settings.turnOnThreadLast);
     }
