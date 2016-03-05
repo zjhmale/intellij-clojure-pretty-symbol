@@ -86,31 +86,12 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 rangeStart += 1;
             }
 
-            if (key.equals("(def")) {
-                shouldFold = settings.turnOnDef;
-            } else if (key.equals("(defn")) {
-                shouldFold = settings.turnOnDefn;
-            } else if (key.equals("(fn")) {
-                shouldFold = settings.turnOnFn;
-            } else if (key.equals("(partial")) {
-                shouldFold = settings.turnOnPartial;
-            } else if (key.equals("(->")) {
-                shouldFold = settings.turnOnThreadFirst;
-            } else if (key.equals("(->>")) {
-                shouldFold = settings.turnOnThreadLast;
-            } else if (key.equals("not=")) {
-                shouldFold = settings.turnOnNotEqual;
-            } else if (key.equals("#(")) {
-                shouldFold = settings.turnOnLambda;
-            } else if (key.equals("#{")) {
-                shouldFold = settings.turnOnSet;
-            }
+            String nextChar = text.substring(rangeEnd, rangeEnd + 1);
 
-            if (key.startsWith("(def")) {
-                String nextChar = text.substring(rangeEnd, rangeEnd + 1);
+            if (key.equals("(def")) {
                 if (nextChar.equals(" ")) {
                     if (isContainOpenDelimiter(text, rangeStart)) {
-                        shouldFold = isDelimiterMatch(text, rangeStart);
+                        shouldFold = settings.turnOnDef && isDelimiterMatch(text, rangeStart);
                     }
                 }
                 if (!nextChar.equals(" ")) {
@@ -119,19 +100,25 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 if (nextChar.equals("n")) {
                     key = "(defn";
                     rangeEnd += 1;
-                    shouldFold = true;
+                    shouldFold = settings.turnOnDefn;
                 }
-            }
-            if (key.startsWith("(->")) {
-                String nextChar = text.substring(rangeEnd, rangeEnd + 1);
+            } else if (key.equals("(fn")) {
+                shouldFold = settings.turnOnFn;
+            } else if (key.equals("(partial")) {
+                shouldFold = settings.turnOnPartial;
+            } else if (key.equals("(->")) {
                 if (nextChar.equals(">")) {
                     key = "(->>";
                     rangeEnd += 1;
+                    shouldFold = settings.turnOnThreadLast;
                 }
-                shouldFold = isDelimiterMatch(text, rangeStart);
-            }
-            if (key.equals("not=")) {
-                shouldFold = isDelimiterMatch(text, rangeStart);
+                shouldFold = settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart);
+            } else if (key.equals("not=")) {
+                shouldFold = settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart);
+            } else if (key.equals("#(")) {
+                shouldFold = settings.turnOnLambda;
+            } else if (key.equals("#{")) {
+                shouldFold = settings.turnOnSet;
             }
 
             if (shouldFold) {
