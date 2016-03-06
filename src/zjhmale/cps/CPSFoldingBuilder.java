@@ -73,6 +73,21 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         return rightCount > leftCount;
     }
 
+    private static int findLeftParenthese(String text, int start) {
+        String prevChar = "";
+        int leftCount = 0;
+        int rightCount = 0;
+        while (!prevChar.equals("(") && start > 0) {
+            prevChar = text.substring(start - 1, start);
+            start--;
+        }
+        if (prevChar.equals("(")) {
+            return start;
+        } else {
+            return -1;
+        }
+    }
+
     @NotNull
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull final ASTNode node, @NotNull final Document document) {
@@ -134,6 +149,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 }
             } else if (setOperators.contains(key)) {
                 String nextThreeChars = text.substring(rangeEnd, rangeEnd + 3);
+                rangeStart = findLeftParenthese(text, rangeStart) + 1;
                 if (nextThreeChars.equals(" #{")) {
                     if (key.equals("union")) {
                         shouldFold = settings.turnOnSetUnion;
