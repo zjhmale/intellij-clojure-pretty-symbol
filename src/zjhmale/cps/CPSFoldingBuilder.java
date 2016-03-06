@@ -25,6 +25,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
     private static final List<String> openDelimiters = Arrays.asList("(", "{", "[");
     private static final List<String> closeDelimiters = Arrays.asList(")", "}", "]");
     private static final List<String> setOperators = Arrays.asList("union", "difference", "intersection");
+    private static final List<String> leftStopFlags = Arrays.asList("(", "[", " ");
 
     static {
         prettySymbolMaps = new HashMap<String, String>();
@@ -73,13 +74,13 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         return rightCount > leftCount;
     }
 
-    private static int findLeftDelimiter(String text, int start) {
+    private static int findLeftStopPos(String text, int start) {
         String prevChar = "";
-        while (!prevChar.equals("(") && !prevChar.equals("[") && start > 0) {
+        while (!leftStopFlags.contains(prevChar) && start > 0) {
             prevChar = text.substring(start - 1, start);
             start--;
         }
-        if (prevChar.equals("(") || prevChar.equals("[")) {
+        if (leftStopFlags.contains(prevChar)) {
             return start;
         } else {
             return -1;
@@ -146,10 +147,10 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     shouldFold = settings.turnOnSet;
                 }
             } else if (setOperators.contains(key)) {
-                int leftDelimiterPos = findLeftDelimiter(text, rangeStart);
-                if (leftDelimiterPos != -1) {
-                    rangeStart = leftDelimiterPos + 1;
-                    if (nextChar.equals(" ")) {
+                int leftStopPos = findLeftStopPos(text, rangeStart);
+                if (leftStopPos != -1) {
+                    rangeStart = leftStopPos + 1;
+                    if (nextChar.equals(" ") || nextChar.equals("]")) {
                         if (key.equals("union")) {
                             shouldFold = settings.turnOnSetUnion;
                         }
