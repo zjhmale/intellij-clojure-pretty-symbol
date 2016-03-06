@@ -111,6 +111,8 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 if (nextChar.equals(" ")) {
                     if (isContainOpenDelimiter(text, rangeStart)) {
                         shouldFold = settings.turnOnDef && isDelimiterMatch(text, rangeStart);
+                    } else {
+                        shouldFold = true;
                     }
                 }
                 if (!nextChar.equals(" ")) {
@@ -129,7 +131,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                 if (nextChar.equals(">")) {
                     key = "(->>";
                     rangeEnd += 1;
-                    shouldFold = settings.turnOnThreadLast;
+                    shouldFold = settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart);
                 }
                 if (nextChar.equals(" ")) {
                     shouldFold = settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart);
