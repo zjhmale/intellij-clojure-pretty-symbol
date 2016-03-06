@@ -20,10 +20,11 @@ import java.util.regex.Pattern;
  * Created by zjh on 2016/2/19.
  */
 public class CPSFoldingBuilder implements FoldingBuilder {
-    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|#\\(|#\\{");
+    private static final Pattern symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|#\\(|#\\{|union|difference|intersection");
     private static final HashMap<String, String> prettySymbolMaps;
-    private static final String[] openDelimiters = new String[]{"(", "{", "["};
-    private static final String[] closeDelimiters = new String[]{")", "}", "]"};
+    private static final List<String> openDelimiters = Arrays.asList("(", "{", "[");
+    private static final List<String> closeDelimiters = Arrays.asList(")", "}", "]");
+    private static final List<String> setOperators = Arrays.asList("union", "difference", "intersection");
 
     static {
         prettySymbolMaps = new HashMap<String, String>();
@@ -37,6 +38,9 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         prettySymbolMaps.put("#(", "λ(");
         prettySymbolMaps.put("#{", "∈{");
         prettySymbolMaps.put("#{}", "∅");
+        prettySymbolMaps.put("union", "⋃");
+        prettySymbolMaps.put("intersection", "⋂");
+        prettySymbolMaps.put("difference", "−");
     }
 
     private static boolean isContainOpenDelimiter(String text, int start) {
@@ -44,7 +48,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         String nextChar = "";
         while (!nextChar.equals("\n") && start < text.length()) {
             nextChar = text.substring(start, start + 1);
-            if (Arrays.asList(openDelimiters).contains(nextChar)) {
+            if (openDelimiters.contains(nextChar)) {
                 contain = true;
             }
             start++;
@@ -58,10 +62,10 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         int rightCount = 0;
         while (!nextChar.equals("\n") && start < text.length()) {
             nextChar = text.substring(start, start + 1);
-            if (Arrays.asList(openDelimiters).contains(nextChar)) {
+            if (openDelimiters.contains(nextChar)) {
                 leftCount++;
             }
-            if (Arrays.asList(closeDelimiters).contains(nextChar)) {
+            if (closeDelimiters.contains(nextChar)) {
                 rightCount++;
             }
             start++;
@@ -127,6 +131,19 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     shouldFold = settings.turnOnEmptySet;
                 } else {
                     shouldFold = settings.turnOnSet;
+                }
+            } else if (setOperators.contains(key)) {
+                String nextThreeChars = text.substring(rangeEnd, rangeEnd + 3);
+                if (nextThreeChars.equals(" #{")) {
+                    if (key.equals("union")) {
+                        shouldFold = settings.turnOnSetUnion;
+                    }
+                    if (key.equals("difference")) {
+                        shouldFold = settings.turnOnSetDifference;
+                    }
+                    if (key.equals("intersection")) {
+                        shouldFold = settings.turnOnSetIntersection;
+                    }
                 }
             }
 

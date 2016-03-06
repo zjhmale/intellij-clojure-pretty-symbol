@@ -43,6 +43,9 @@ public class CPSConfigurable implements Configurable {
         settings.turnOnPartial = settingsForm.turnOnPartial();
         settings.turnOnSet = settingsForm.turnOnSet();
         settings.turnOnEmptySet = settingsForm.turnOnEmptySet();
+        settings.turnOnSetUnion = settingsForm.turnOnSetUnion();
+        settings.turnOnSetDifference = settingsForm.turnOnSetDifference();
+        settings.turnOnSetIntersection = settingsForm.turnOnSetIntersection();
         settings.turnOnThreadFirst = settingsForm.turnOnThreadFirst();
         settings.turnOnThreadLast = settingsForm.turnOnThreadLast();
     }

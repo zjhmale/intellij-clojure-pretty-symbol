@@ -25,6 +25,9 @@ public class CPSSettings implements PersistentStateComponent<CPSSettings> {
     public boolean turnOnLambda = true;
     public boolean turnOnSet = true;
     public boolean turnOnEmptySet = true;
+    public boolean turnOnSetUnion = true;
+    public boolean turnOnSetDifference = true;
+    public boolean turnOnSetIntersection = true;
 
     @Nullable
     @Override

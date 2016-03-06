@@ -17,6 +17,9 @@ public class CPSSettingsForm {
     private JCheckBox prettyPartialCheckBox;
     private JCheckBox prettySetCheckBox;
     private JCheckBox prettyEmptySetCheckBox;
+    private JCheckBox prettySetUnionCheckBox;
+    private JCheckBox prettySetDifferenceCheckBox;
+    private JCheckBox prettySetIntersectionCheckBox;
     private JCheckBox prettyThreadFirstCheckBox;
     private JCheckBox prettyThreadLastCheckBox;
 
@@ -31,6 +34,9 @@ public class CPSSettingsForm {
         prettyPartialCheckBox.setSelected(true);
         prettySetCheckBox.setSelected(true);
         prettyEmptySetCheckBox.setSelected(true);
+        prettySetUnionCheckBox.setSelected(true);
+        prettySetDifferenceCheckBox.setSelected(true);
+        prettySetIntersectionCheckBox.setSelected(true);
         prettyThreadFirstCheckBox.setSelected(true);
         prettyThreadLastCheckBox.setSelected(true);
 
@@ -73,6 +79,18 @@ public class CPSSettingsForm {
         return prettyEmptySetCheckBox.isSelected();
     }
 
+    public boolean turnOnSetUnion() {
+        return prettySetUnionCheckBox.isSelected();
+    }
+
+    public boolean turnOnSetDifference() {
+        return prettySetDifferenceCheckBox.isSelected();
+    }
+
+    public boolean turnOnSetIntersection() {
+        return prettySetIntersectionCheckBox.isSelected();
+    }
+
     public boolean turnOnThreadFirst() {
         return prettyThreadFirstCheckBox.isSelected();
     }
@@ -90,6 +108,9 @@ public class CPSSettingsForm {
                 || prettyPartialCheckBox.isSelected() != settings.turnOnPartial
                 || prettySetCheckBox.isSelected() != settings.turnOnSet
                 || prettyEmptySetCheckBox.isSelected() != settings.turnOnEmptySet
+                || prettySetUnionCheckBox.isSelected() != settings.turnOnSetUnion
+                || prettySetDifferenceCheckBox.isSelected() != settings.turnOnSetDifference
+                || prettySetIntersectionCheckBox.isSelected() != settings.turnOnSetIntersection
                 || prettyThreadFirstCheckBox.isSelected() != settings.turnOnThreadFirst
                 || prettyThreadLastCheckBox.isSelected() != settings.turnOnThreadLast;
     }
@@ -103,6 +124,9 @@ public class CPSSettingsForm {
         prettyPartialCheckBox.setSelected(settings.turnOnPartial);
         prettySetCheckBox.setSelected(settings.turnOnSet);
         prettyEmptySetCheckBox.setSelected(settings.turnOnEmptySet);
+        prettySetUnionCheckBox.setSelected(settings.turnOnSetUnion);
+        prettySetDifferenceCheckBox.setSelected(settings.turnOnSetDifference);
+        prettySetIntersectionCheckBox.setSelected(settings.turnOnSetIntersection);
         prettyThreadFirstCheckBox.setSelected(settings.turnOnThreadFirst);
         prettyThreadLastCheckBox.setSelected(settings.turnOnThreadLast);
     }
