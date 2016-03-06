@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>zjhmale.clojure-pretty-symbol</id>
   <name>Clojure Pretty Symbol</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="zjhmale@gmail.com" url="https://github.com/zjhmale">zjhmale</vendor>
 
   <description><![CDATA[
@@ -9,14 +9,18 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.2:</p>
+      <ul>
+        <li>Pretty symbols for #{} union difference intersection</li>
+      </ul>
       <p>1.1:</p>
       <ul>
-        <li>fix def multiline issue</li>
-        <li>update def pretty symbol</li>
+        <li>Fix def multiline issue</li>
+        <li>Update def pretty symbol</li>
       </ul>
       <p>1.0:</p>
       <ul>
-        <li>Pretty symbols for Clojure Programming Language</li>
+        <li>Pretty symbols for def defn fn #() not= partial #{...} -> ->></li>
       </ul>
     ]]>
   </change-notes>
