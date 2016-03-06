@@ -73,13 +73,13 @@ public class CPSFoldingBuilder implements FoldingBuilder {
         return rightCount > leftCount;
     }
 
-    private static int findLeftParenthese(String text, int start) {
+    private static int findLeftDelimiter(String text, int start) {
         String prevChar = "";
-        while (!prevChar.equals("(") && start > 0) {
+        while (!prevChar.equals("(") && !prevChar.equals("[") && start > 0) {
             prevChar = text.substring(start - 1, start);
             start--;
         }
-        if (prevChar.equals("(")) {
+        if (prevChar.equals("(") || prevChar.equals("[")) {
             return start;
         } else {
             return -1;
@@ -146,16 +146,19 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     shouldFold = settings.turnOnSet;
                 }
             } else if (setOperators.contains(key)) {
-                rangeStart = findLeftParenthese(text, rangeStart) + 1;
-                if (nextChar.equals(" ")) {
-                    if (key.equals("union")) {
-                        shouldFold = settings.turnOnSetUnion;
-                    }
-                    if (key.equals("difference")) {
-                        shouldFold = settings.turnOnSetDifference;
-                    }
-                    if (key.equals("intersection")) {
-                        shouldFold = settings.turnOnSetIntersection;
+                int leftDelimiterPos = findLeftDelimiter(text, rangeStart);
+                if (leftDelimiterPos != -1) {
+                    rangeStart = leftDelimiterPos + 1;
+                    if (nextChar.equals(" ")) {
+                        if (key.equals("union")) {
+                            shouldFold = settings.turnOnSetUnion;
+                        }
+                        if (key.equals("difference")) {
+                            shouldFold = settings.turnOnSetDifference;
+                        }
+                        if (key.equals("intersection")) {
+                            shouldFold = settings.turnOnSetIntersection;
+                        }
                     }
                 }
             }
