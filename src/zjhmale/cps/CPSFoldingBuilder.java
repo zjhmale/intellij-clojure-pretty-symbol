@@ -75,8 +75,6 @@ public class CPSFoldingBuilder implements FoldingBuilder {
 
     private static int findLeftParenthese(String text, int start) {
         String prevChar = "";
-        int leftCount = 0;
-        int rightCount = 0;
         while (!prevChar.equals("(") && start > 0) {
             prevChar = text.substring(start - 1, start);
             start--;
@@ -148,9 +146,8 @@ public class CPSFoldingBuilder implements FoldingBuilder {
                     shouldFold = settings.turnOnSet;
                 }
             } else if (setOperators.contains(key)) {
-                String nextThreeChars = text.substring(rangeEnd, rangeEnd + 3);
                 rangeStart = findLeftParenthese(text, rangeStart) + 1;
-                if (nextThreeChars.equals(" #{")) {
+                if (nextChar.equals(" ")) {
                     if (key.equals("union")) {
                         shouldFold = settings.turnOnSetUnion;
                     }
