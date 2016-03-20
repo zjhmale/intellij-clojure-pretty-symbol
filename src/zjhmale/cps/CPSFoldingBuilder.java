@@ -109,11 +109,7 @@ public class CPSFoldingBuilder implements FoldingBuilder {
 
             if (key.equals("(def")) {
                 if (nextChar.equals(" ")) {
-                    if (isContainOpenDelimiter(text, rangeStart)) {
-                        shouldFold = settings.turnOnDef && isDelimiterMatch(text, rangeStart);
-                    } else {
-                        shouldFold = true;
-                    }
+                    shouldFold = settings.turnOnDef && isDelimiterMatch(text, rangeStart);
                 }
                 if (!nextChar.equals(" ")) {
                     shouldFold = false;
