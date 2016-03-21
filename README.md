@@ -22,6 +22,12 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/settings.png)
 
+## Development
+
+* `./gradlew runIdea`
+* `./gradlew buildPlugin`
+* `./gradlew test`
+
 ## License
 
 Copyright © 2016 zjhmale
