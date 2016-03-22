@@ -14,6 +14,7 @@
         <li>Fix def symbol settings bug</li>
         <li>Support >= <= pretty symbols</li>
         <li>Add / left stop flag for set operators</li>
+        <li>Update def folding strategy</li>
       </ul>
       <p>1.2:</p>
       <ul>

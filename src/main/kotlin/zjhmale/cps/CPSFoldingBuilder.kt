@@ -38,7 +38,10 @@ class CPSFoldingBuilder : FoldingBuilder {
     private val leftStopFlags = listOf("(", "[", " ", "/")
     private val foldingGroup = FoldingGroup.newGroup("Clojure Pretty Symbol")
 
-    private fun isDelimiterMatch(text: String, start: Int): Boolean {
+    private val GT = {a: Int, b: Int -> a > b}
+    private val GE = {a: Int, b: Int -> a >= b}
+
+    private fun isDelimiterMatch(text: String, start: Int, op: (Int, Int) -> Boolean): Boolean {
         var startOffset = start
         var nextChar = ""
         var leftCount = 0
@@ -53,7 +56,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             }
             startOffset++
         }
-        return rightCount > leftCount
+        return op(rightCount, leftCount)
     }
 
     private fun findLeftStopPos(text: String, start: Int): Int {
@@ -91,7 +94,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             val shouldFold =
                     if (key == "(def") {
                         if (nextChar == " ") {
-                            settings.turnOnDef && isDelimiterMatch(text, rangeStart)
+                            settings.turnOnDef && isDelimiterMatch(text, rangeStart, GE)
                         } else if (nextChar == "n") {
                             key = "(defn"
                             rangeEnd += 1
@@ -108,22 +111,22 @@ class CPSFoldingBuilder : FoldingBuilder {
                         if (nextChar == ">") {
                             key = "(->>"
                             rangeEnd += 1
-                            settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart)
+                            settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart, GT)
                         } else if (nextChar == " ") {
-                            settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart)
+                            settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart, GT)
                         } else {
                             false
                         }
                     } else if (key == "not=") {
-                        settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart)
+                        settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == ">=") {
                         if (prevChar == ">") {
                             false
                         } else {
-                            settings.turnOnGT && isDelimiterMatch(text, rangeStart)
+                            settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT)
                         }
                     } else if (key == "<=") {
-                        settings.turnOnLT && isDelimiterMatch(text, rangeStart)
+                        settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "#(") {
                         settings.turnOnLambda
                     } else if (key == "#{") {
