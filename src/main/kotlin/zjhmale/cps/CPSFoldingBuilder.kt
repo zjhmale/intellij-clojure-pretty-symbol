@@ -37,32 +37,32 @@ class CPSFoldingBuilder : FoldingBuilder {
     private val foldingGroup = FoldingGroup.newGroup("Clojure Pretty Symbol")
 
     private fun isDelimiterMatch(text: String, start: Int): Boolean {
-        var start = start
+        var startOffset = start
         var nextChar = ""
         var leftCount = 0
         var rightCount = 0
-        while (nextChar != "\n" && start < text.length) {
-            nextChar = text.substring(start, start + 1)
+        while (nextChar != "\n" && startOffset < text.length) {
+            nextChar = text.substring(startOffset, startOffset + 1)
             if (openDelimiters.contains(nextChar)) {
                 leftCount++
             }
             if (closeDelimiters.contains(nextChar)) {
                 rightCount++
             }
-            start++
+            startOffset++
         }
         return rightCount > leftCount
     }
 
     private fun findLeftStopPos(text: String, start: Int): Int {
-        var start = start
+        var startOffset = start
         var prevChar = ""
-        while (!leftStopFlags.contains(prevChar) && start > 0) {
-            prevChar = text.substring(start - 1, start)
-            start--
+        while (!leftStopFlags.contains(prevChar) && startOffset > 0) {
+            prevChar = text.substring(startOffset - 1, startOffset)
+            startOffset--
         }
         if (leftStopFlags.contains(prevChar)) {
-            return start
+            return startOffset
         } else {
             return -1
         }
@@ -79,7 +79,6 @@ class CPSFoldingBuilder : FoldingBuilder {
             val nodeRange = node.textRange
             var rangeStart = nodeRange.startOffset + matcher.start()
             var rangeEnd = nodeRange.startOffset + matcher.end()
-            var shouldFold = false
             if (key.startsWith("(")) {
                 rangeStart += 1
             }
@@ -87,63 +86,70 @@ class CPSFoldingBuilder : FoldingBuilder {
             val nextChar = text.substring(rangeEnd, rangeEnd + 1)
             val prevChar = text.substring(rangeStart - 1, rangeStart)
 
-            if (key == "(def") {
-                if (nextChar == " ") {
-                    shouldFold = settings.turnOnDef && isDelimiterMatch(text, rangeStart)
-                }
-                if (nextChar != " ") {
-                    shouldFold = false
-                }
-                if (nextChar == "n") {
-                    key = "(defn"
-                    rangeEnd += 1
-                    shouldFold = settings.turnOnDefn
-                }
-            } else if (key == "(fn") {
-                shouldFold = settings.turnOnFn
-            } else if (key == "(partial") {
-                shouldFold = settings.turnOnPartial
-            } else if (key == "(->") {
-                if (nextChar == ">") {
-                    key = "(->>"
-                    rangeEnd += 1
-                    shouldFold = settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart)
-                }
-                if (nextChar == " ") {
-                    shouldFold = settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart)
-                }
-            } else if (key == "not=") {
-                shouldFold = settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart)
-            } else if (key == "#(") {
-                shouldFold = settings.turnOnLambda
-            } else if (key == "#{") {
-                if (nextChar == "}") {
-                    key = "#{}"
-                    rangeEnd += 1
-                    shouldFold = settings.turnOnEmptySet
-                } else {
-                    shouldFold = settings.turnOnSet
-                }
-            } else if (setOperators.contains(key)) {
-                val leftStopPos = findLeftStopPos(text, rangeStart)
-                if (leftStopPos != -1 && leftStopFlags.contains(prevChar)) {
-                    rangeStart = leftStopPos + 1
-                    if (nextChar == " " || nextChar == "]") {
-                        if (key == "union") {
-                            shouldFold = settings.turnOnSetUnion
+            val shouldFold =
+                    if (key == "(def") {
+                        if (nextChar == " ") {
+                            settings.turnOnDef && isDelimiterMatch(text, rangeStart)
+                        } else if (nextChar == "n") {
+                            key = "(defn"
+                            rangeEnd += 1
+                            settings.turnOnDefn
+                        } else {
+                            false
                         }
-                        if (key == "difference") {
-                            shouldFold = settings.turnOnSetDifference
+
+                    } else if (key == "(fn") {
+                        settings.turnOnFn
+                    } else if (key == "(partial") {
+                        settings.turnOnPartial
+                    } else if (key == "(->") {
+                        if (nextChar == ">") {
+                            key = "(->>"
+                            rangeEnd += 1
+                            settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart)
+                        } else if (nextChar == " ") {
+                            settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart)
+                        } else {
+                            false
                         }
-                        if (key == "intersection") {
-                            shouldFold = settings.turnOnSetIntersection
+                    } else if (key == "not=") {
+                        settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart)
+                    } else if (key == "#(") {
+                        settings.turnOnLambda
+                    } else if (key == "#{") {
+                        if (nextChar == "}") {
+                            key = "#{}"
+                            rangeEnd += 1
+                            settings.turnOnEmptySet
+                        } else {
+                            settings.turnOnSet
                         }
+                    } else if (setOperators.contains(key)) {
+                        val leftStopPos = findLeftStopPos(text, rangeStart)
+                        if (leftStopPos != -1 && leftStopFlags.contains(prevChar)) {
+                            rangeStart = leftStopPos + 1
+                            if (nextChar == " " || nextChar == "]") {
+                                if (key == "union") {
+                                    settings.turnOnSetUnion
+                                } else if (key == "difference") {
+                                    settings.turnOnSetDifference
+                                } else if (key == "intersection") {
+                                    settings.turnOnSetIntersection
+                                } else {
+                                    false
+                                }
+                            } else {
+                                false
+                            }
+                        } else {
+                            false
+                        }
+                    } else {
+                        false
                     }
-                }
-            }
 
             if (shouldFold) {
-                val pretty = prettySymbolMaps[key]!!
+                val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
                 val range = TextRange.create(rangeStart, rangeEnd)
                 descriptors.add(CPSFoldingDescriptor(node, range, foldingGroup, pretty, true))
             }

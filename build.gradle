@@ -19,7 +19,7 @@ allprojects {
     apply plugin: 'org.jetbrains.intellij'
 
     intellij {
-        pluginName 'Clojure Pretty Symbol'
+        pluginName name
 
         version ideaVersion
         downloadSources Boolean.valueOf(downloadIdeaSources)
