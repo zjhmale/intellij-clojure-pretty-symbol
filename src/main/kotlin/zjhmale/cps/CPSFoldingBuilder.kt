@@ -33,7 +33,7 @@ class CPSFoldingBuilder : FoldingBuilder {
     private val openDelimiters = listOf("(", "{", "[")
     private val closeDelimiters = listOf(")", "}", "]")
     private val setOperators = listOf("union", "difference", "intersection")
-    private val leftStopFlags = listOf("(", "[", " ")
+    private val leftStopFlags = listOf("(", "[", " ", "/")
     private val foldingGroup = FoldingGroup.newGroup("Clojure Pretty Symbol")
 
     private fun isDelimiterMatch(text: String, start: Int): Boolean {
@@ -85,6 +85,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             }
 
             val nextChar = text.substring(rangeEnd, rangeEnd + 1)
+            val prevChar = text.substring(rangeStart - 1, rangeStart)
 
             if (key == "(def") {
                 if (nextChar == " ") {
@@ -125,7 +126,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                 }
             } else if (setOperators.contains(key)) {
                 val leftStopPos = findLeftStopPos(text, rangeStart)
-                if (leftStopPos != -1) {
+                if (leftStopPos != -1 && leftStopFlags.contains(prevChar)) {
                     rangeStart = leftStopPos + 1
                     if (nextChar == " " || nextChar == "]") {
                         if (key == "union") {
