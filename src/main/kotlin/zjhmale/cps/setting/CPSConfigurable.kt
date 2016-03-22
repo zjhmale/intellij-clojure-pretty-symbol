@@ -27,6 +27,8 @@ class CPSConfigurable : Configurable {
         settings.turnOnFn = settingsForm?.turnOnFn() ?: true
         settings.turnOnLambda = settingsForm?.turnOnLambda() ?: true
         settings.turnOnNotEqual = settingsForm?.turnOnNotEqual() ?: true
+        settings.turnOnGT = settingsForm?.turnOnGT() ?: true
+        settings.turnOnLT = settingsForm?.turnOnLT() ?: true
         settings.turnOnPartial = settingsForm?.turnOnPartial() ?: true
         settings.turnOnSet = settingsForm?.turnOnSet() ?: true
         settings.turnOnEmptySet = settingsForm?.turnOnEmptySet() ?: true

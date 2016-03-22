@@ -14,6 +14,8 @@ public class CPSSettingsForm {
     private JCheckBox prettyFnCheckBox;
     private JCheckBox prettyLambdaCheckBox;
     private JCheckBox prettyNotEqualCheckBox;
+    private JCheckBox prettyGTCheckBox;
+    private JCheckBox prettyLTCheckBox;
     private JCheckBox prettyPartialCheckBox;
     private JCheckBox prettySetCheckBox;
     private JCheckBox prettyEmptySetCheckBox;
@@ -31,6 +33,8 @@ public class CPSSettingsForm {
         prettyFnCheckBox.setSelected(true);
         prettyLambdaCheckBox.setSelected(true);
         prettyNotEqualCheckBox.setSelected(true);
+        prettyGTCheckBox.setSelected(true);
+        prettyLTCheckBox.setSelected(true);
         prettyPartialCheckBox.setSelected(true);
         prettySetCheckBox.setSelected(true);
         prettyEmptySetCheckBox.setSelected(true);
@@ -65,6 +69,14 @@ public class CPSSettingsForm {
 
     public boolean turnOnNotEqual() {
         return prettyNotEqualCheckBox.isSelected();
+    }
+
+    public boolean turnOnGT() {
+        return prettyGTCheckBox.isSelected();
+    }
+
+    public boolean turnOnLT() {
+        return prettyLTCheckBox.isSelected();
     }
 
     public boolean turnOnPartial() {
@@ -105,6 +117,8 @@ public class CPSSettingsForm {
                 || prettyFnCheckBox.isSelected() != settings.turnOnFn
                 || prettyLambdaCheckBox.isSelected() != settings.turnOnLambda
                 || prettyNotEqualCheckBox.isSelected() != settings.turnOnNotEqual
+                || prettyGTCheckBox.isSelected() != settings.turnOnGT
+                || prettyLTCheckBox.isSelected() != settings.turnOnLT
                 || prettyPartialCheckBox.isSelected() != settings.turnOnPartial
                 || prettySetCheckBox.isSelected() != settings.turnOnSet
                 || prettyEmptySetCheckBox.isSelected() != settings.turnOnEmptySet
@@ -121,6 +135,8 @@ public class CPSSettingsForm {
         prettyFnCheckBox.setSelected(settings.turnOnFn);
         prettyLambdaCheckBox.setSelected(settings.turnOnLambda);
         prettyNotEqualCheckBox.setSelected(settings.turnOnNotEqual);
+        prettyGTCheckBox.setSelected(settings.turnOnGT);
+        prettyLTCheckBox.setSelected(settings.turnOnLT);
         prettyPartialCheckBox.setSelected(settings.turnOnPartial);
         prettySetCheckBox.setSelected(settings.turnOnSet);
         prettyEmptySetCheckBox.setSelected(settings.turnOnEmptySet);

@@ -14,7 +14,7 @@ import java.util.regex.Pattern
  * Created by zjh on 16/3/22.
  */
 class CPSFoldingBuilder : FoldingBuilder {
-    private val symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|#\\(|#\\{|union|difference|intersection")
+    private val symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|>=|<=|#\\(|#\\{|union|difference|intersection")
     private val prettySymbolMaps = hashMapOf(
             "(fn" to "λ",
             "(partial" to "Ƥ",
@@ -23,6 +23,8 @@ class CPSFoldingBuilder : FoldingBuilder {
             "(->" to "→",
             "(->>" to "⇉",
             "not=" to "≠",
+            ">=" to "≥",
+            "<=" to "≤",
             "#(" to "λ(",
             "#{" to "∈{",
             "#{}" to "∅",
@@ -114,6 +116,14 @@ class CPSFoldingBuilder : FoldingBuilder {
                         }
                     } else if (key == "not=") {
                         settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart)
+                    } else if (key == ">=") {
+                        if (prevChar == ">") {
+                            false
+                        } else {
+                            settings.turnOnGT && isDelimiterMatch(text, rangeStart)
+                        }
+                    } else if (key == "<=") {
+                        settings.turnOnLT && isDelimiterMatch(text, rangeStart)
                     } else if (key == "#(") {
                         settings.turnOnLambda
                     } else if (key == "#{") {

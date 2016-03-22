@@ -22,6 +22,8 @@ public class CPSSettings implements PersistentStateComponent<CPSSettings> {
     public boolean turnOnThreadFirst = true;
     public boolean turnOnThreadLast = true;
     public boolean turnOnNotEqual = true;
+    public boolean turnOnGT = true;
+    public boolean turnOnLT = true;
     public boolean turnOnLambda = true;
     public boolean turnOnSet = true;
     public boolean turnOnEmptySet = true;
