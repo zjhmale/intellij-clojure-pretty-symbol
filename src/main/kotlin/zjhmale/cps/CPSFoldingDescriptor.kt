@@ -10,7 +10,7 @@ import com.intellij.openapi.util.TextRange
  */
 class CPSFoldingDescriptor(node: ASTNode,
                            range: TextRange,
-                           group: FoldingGroup,
+                           group: FoldingGroup?,
                            val name: String,
                            val notExpandable: Boolean) : FoldingDescriptor(node, range, group) {
 

@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.FoldingBuilder
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
 import zjhmale.cps.setting.CPSSettings
 import java.util.*
@@ -36,10 +35,9 @@ class CPSFoldingBuilder : FoldingBuilder {
     private val closeDelimiters = listOf(")", "}", "]")
     private val setOperators = listOf("union", "difference", "intersection")
     private val leftStopFlags = listOf("(", "[", " ", "/")
-    private val foldingGroup = FoldingGroup.newGroup("Clojure Pretty Symbol")
 
-    private val GT = {a: Int, b: Int -> a > b}
-    private val GE = {a: Int, b: Int -> a >= b}
+    private val GT = { a: Int, b: Int -> a > b }
+    private val GE = { a: Int, b: Int -> a >= b }
 
     private fun isDelimiterMatch(text: String, start: Int, op: (Int, Int) -> Boolean): Boolean {
         var startOffset = start
@@ -164,7 +162,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             if (shouldFold) {
                 val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
                 val range = TextRange.create(rangeStart, rangeEnd)
-                descriptors.add(CPSFoldingDescriptor(node, range, foldingGroup, pretty, true))
+                descriptors.add(CPSFoldingDescriptor(node, range, null, pretty, true))
             }
         }
         return descriptors.toArray<FoldingDescriptor>(arrayOfNulls<FoldingDescriptor>(descriptors.size))
