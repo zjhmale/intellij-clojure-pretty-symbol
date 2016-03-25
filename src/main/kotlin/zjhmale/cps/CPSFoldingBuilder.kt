@@ -24,7 +24,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             "(partial" to "Ƥ",
             "(def" to "≡",
             "(defn" to "ƒ",
-            "(doseq" to "",
+            "(doseq" to "∀",
             "(comp" to "∘",
             "(->" to "→",
             "(->>" to "⇉",
@@ -97,6 +97,7 @@ class CPSFoldingBuilder : FoldingBuilder {
             }
 
             val nextChar = text.substring(rangeEnd, rangeEnd + 1)
+            val nextTwoChars = text.substring(rangeEnd, rangeEnd + 2)
             val prevChar = text.substring(rangeStart - 1, rangeStart)
 
             val shouldFold =
@@ -126,16 +127,23 @@ class CPSFoldingBuilder : FoldingBuilder {
                             false
                         }
                     } else if (key == "(let") {
-                        val nextTwoChars = text.substring(rangeEnd, rangeEnd + 2)
                         if (nextTwoChars == "fn") {
                             key = "(letfn"
                             rangeEnd += 2
-                            settings.turnOnLetfn && isDelimiterMatch(text, rangeStart, GT)
+                            settings.turnOnLetfn && isDelimiterMatch(text, rangeStart, GE)
                         } else if (nextChar == " ") {
-                            settings.turnOnLet && isDelimiterMatch(text, rangeStart, GT)
+                            settings.turnOnLet && isDelimiterMatch(text, rangeStart, GE)
                         } else {
                             false
                         }
+                    } else if (key == "(doseq") {
+                        if (nextTwoChars == " [") {
+                            settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
+                        } else {
+                            false
+                        }
+                    } else if (key == "(comp") {
+                        settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "not=") {
                         settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == ">=") {

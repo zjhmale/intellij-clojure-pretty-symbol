@@ -26,6 +26,8 @@ public class CPSSettingsForm {
     public JCheckBox prettyThreadLastCheckBox;
     public JCheckBox prettyLetCheckBox;
     public JCheckBox prettyLetfnCheckBox;
+    public JCheckBox prettyDoseqCheckBox;
+    public JCheckBox prettyCompCheckBox;
 
     private final CPSSettings settings;
 
@@ -43,6 +45,8 @@ public class CPSSettingsForm {
                 || prettyFnCheckBox.isSelected() != settings.turnOnFn
                 || prettyLetCheckBox.isSelected() != settings.turnOnLet
                 || prettyLetfnCheckBox.isSelected() != settings.turnOnLetfn
+                || prettyDoseqCheckBox.isSelected() != settings.turnOnDoseq
+                || prettyCompCheckBox.isSelected() != settings.turnOnComp
                 || prettyLambdaCheckBox.isSelected() != settings.turnOnLambda
                 || prettyNotEqualCheckBox.isSelected() != settings.turnOnNotEqual
                 || prettyGTCheckBox.isSelected() != settings.turnOnGT
@@ -63,6 +67,8 @@ public class CPSSettingsForm {
         prettyFnCheckBox.setSelected(settings.turnOnFn);
         prettyLetCheckBox.setSelected(settings.turnOnLet);
         prettyLetfnCheckBox.setSelected(settings.turnOnLetfn);
+        prettyDoseqCheckBox.setSelected(settings.turnOnDoseq);
+        prettyCompCheckBox.setSelected(settings.turnOnComp);
         prettyLambdaCheckBox.setSelected(settings.turnOnLambda);
         prettyNotEqualCheckBox.setSelected(settings.turnOnNotEqual);
         prettyGTCheckBox.setSelected(settings.turnOnGT);
