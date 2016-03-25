@@ -141,13 +141,9 @@ class CPSFoldingBuilder : FoldingBuilder {
                             false
                         }
                     } else if (key == "(doseq") {
-                        if (nextTwoChars == " [") {
-                            settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
-                        } else {
-                            false
-                        }
+                        nextTwoChars == " [" && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
                     } else if (key == "(comp") {
-                        settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
+                        nextChar == " " && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "not=") {
                         settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == ">=") {
