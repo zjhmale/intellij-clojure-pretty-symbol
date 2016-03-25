@@ -81,6 +81,10 @@ class CPSFoldingBuilder : FoldingBuilder {
         }
     }
 
+    private val logicSymbolPredicate = { text: String, rangeStart: Int, prevChar: String, nextChar: String ->
+        (prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || (prevChar == " " && arrayOf(")", " ", "\n").contains(nextChar))
+    }
+
     override fun buildFoldRegions(node: ASTNode, document: Document): Array<out FoldingDescriptor> {
         val settings = CPSSettings.getInstance()
         val descriptors = ArrayList<FoldingDescriptor>()
@@ -154,6 +158,12 @@ class CPSFoldingBuilder : FoldingBuilder {
                         }
                     } else if (key == "<=") {
                         settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == "and") {
+                        settings.turnOnAnd && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "or") {
+                        settings.turnOnOr && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "not") {
+                        settings.turnOnNot && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "#(") {
                         settings.turnOnLambda
                     } else if (key == "#{") {
