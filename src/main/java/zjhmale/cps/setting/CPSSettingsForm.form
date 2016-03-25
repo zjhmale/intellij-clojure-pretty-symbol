@@ -130,7 +130,7 @@
               <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty &gt;="/>
+              <text resource-bundle="cps" key="settings.toggle.gt"/>
             </properties>
           </component>
           <component id="c8795" class="javax.swing.JCheckBox" binding="prettyLTCheckBox">
@@ -138,7 +138,7 @@
               <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty &lt;="/>
+              <text resource-bundle="cps" key="settings.toggle.lt"/>
             </properties>
           </component>
           <component id="d44fd" class="javax.swing.JCheckBox" binding="prettyLetCheckBox">
@@ -146,7 +146,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty let"/>
+              <text resource-bundle="cps" key="settings.toggle.let"/>
             </properties>
           </component>
           <component id="3d6cf" class="javax.swing.JCheckBox" binding="prettyLetfnCheckBox">
@@ -154,7 +154,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty letfn"/>
+              <text resource-bundle="cps" key="settings.toggle.letfn"/>
             </properties>
           </component>
           <component id="bd324" class="javax.swing.JCheckBox" binding="prettyDoseqCheckBox">
@@ -162,7 +162,7 @@
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty doseq"/>
+              <text resource-bundle="cps" key="settings.toggle.doseq"/>
             </properties>
           </component>
           <component id="6c1f2" class="javax.swing.JCheckBox" binding="prettyCompCheckBox">
@@ -170,7 +170,7 @@
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty comp"/>
+              <text resource-bundle="cps" key="settings.toggle.comp"/>
             </properties>
           </component>
           <component id="40c21" class="javax.swing.JCheckBox" binding="prettyAndCheckBox">
@@ -178,7 +178,7 @@
               <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty and"/>
+              <text resource-bundle="cps" key="settings.toggle.and"/>
             </properties>
           </component>
           <component id="f9c78" class="javax.swing.JCheckBox" binding="prettyOrCheckBox">
@@ -186,7 +186,7 @@
               <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty or"/>
+              <text resource-bundle="cps" key="settings.toggle.or"/>
             </properties>
           </component>
           <component id="1c8a5" class="javax.swing.JCheckBox" binding="prettyNotCheckBox">
@@ -194,7 +194,7 @@
               <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pretty not"/>
+              <text resource-bundle="cps" key="settings.toggle.not"/>
             </properties>
           </component>
         </children>

@@ -1,6 +1,5 @@
 <idea-plugin version="2">
   <id>zjhmale.clojure-pretty-symbol</id>
-  <name>Clojure Pretty Symbol</name>
   <vendor email="zjhmale@gmail.com" url="https://github.com/zjhmale">zjhmale</vendor>
 
   <description><![CDATA[
