@@ -19,7 +19,7 @@ class CPSFoldingBuilder : FoldingBuilder {
 
     private val prettySymbolMaps = hashMapOf(
             "(fn" to "λ",
-            "(let" to "┝",
+            "(let" to "⊢",
             "(letfn" to "λ",
             "(partial" to "Ƥ",
             "(def" to "≡",
