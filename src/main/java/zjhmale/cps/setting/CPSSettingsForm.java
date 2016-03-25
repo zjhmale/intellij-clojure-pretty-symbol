@@ -9,106 +9,30 @@ public class CPSSettingsForm {
     private JPanel appearancePanel;
     private JPanel panel;
 
-    private JCheckBox prettyDefCheckBox;
-    private JCheckBox prettyDefnCheckBox;
-    private JCheckBox prettyFnCheckBox;
-    private JCheckBox prettyLambdaCheckBox;
-    private JCheckBox prettyNotEqualCheckBox;
-    private JCheckBox prettyGTCheckBox;
-    private JCheckBox prettyLTCheckBox;
-    private JCheckBox prettyPartialCheckBox;
-    private JCheckBox prettySetCheckBox;
-    private JCheckBox prettyEmptySetCheckBox;
-    private JCheckBox prettySetUnionCheckBox;
-    private JCheckBox prettySetDifferenceCheckBox;
-    private JCheckBox prettySetIntersectionCheckBox;
-    private JCheckBox prettyThreadFirstCheckBox;
-    private JCheckBox prettyThreadLastCheckBox;
+    public JCheckBox prettyDefCheckBox;
+    public JCheckBox prettyDefnCheckBox;
+    public JCheckBox prettyFnCheckBox;
+    public JCheckBox prettyLambdaCheckBox;
+    public JCheckBox prettyNotEqualCheckBox;
+    public JCheckBox prettyGTCheckBox;
+    public JCheckBox prettyLTCheckBox;
+    public JCheckBox prettyPartialCheckBox;
+    public JCheckBox prettySetCheckBox;
+    public JCheckBox prettyEmptySetCheckBox;
+    public JCheckBox prettySetUnionCheckBox;
+    public JCheckBox prettySetDifferenceCheckBox;
+    public JCheckBox prettySetIntersectionCheckBox;
+    public JCheckBox prettyThreadFirstCheckBox;
+    public JCheckBox prettyThreadLastCheckBox;
 
     private final CPSSettings settings;
 
     public CPSSettingsForm() {
-        prettyDefCheckBox.setSelected(true);
-        prettyDefnCheckBox.setSelected(true);
-        prettyFnCheckBox.setSelected(true);
-        prettyLambdaCheckBox.setSelected(true);
-        prettyNotEqualCheckBox.setSelected(true);
-        prettyGTCheckBox.setSelected(true);
-        prettyLTCheckBox.setSelected(true);
-        prettyPartialCheckBox.setSelected(true);
-        prettySetCheckBox.setSelected(true);
-        prettyEmptySetCheckBox.setSelected(true);
-        prettySetUnionCheckBox.setSelected(true);
-        prettySetDifferenceCheckBox.setSelected(true);
-        prettySetIntersectionCheckBox.setSelected(true);
-        prettyThreadFirstCheckBox.setSelected(true);
-        prettyThreadLastCheckBox.setSelected(true);
-
         settings = CPSSettings.getInstance();
     }
 
     public JComponent getComponent() {
         return panel;
-    }
-
-    public boolean turnOnDef() {
-        return prettyDefCheckBox.isSelected();
-    }
-
-    public boolean turnOnDefn() {
-        return prettyDefnCheckBox.isSelected();
-    }
-
-    public boolean turnOnFn() {
-        return prettyFnCheckBox.isSelected();
-    }
-
-    public boolean turnOnLambda() {
-        return prettyLambdaCheckBox.isSelected();
-    }
-
-    public boolean turnOnNotEqual() {
-        return prettyNotEqualCheckBox.isSelected();
-    }
-
-    public boolean turnOnGT() {
-        return prettyGTCheckBox.isSelected();
-    }
-
-    public boolean turnOnLT() {
-        return prettyLTCheckBox.isSelected();
-    }
-
-    public boolean turnOnPartial() {
-        return prettyPartialCheckBox.isSelected();
-    }
-
-    public boolean turnOnSet() {
-        return prettySetCheckBox.isSelected();
-    }
-
-    public boolean turnOnEmptySet() {
-        return prettyEmptySetCheckBox.isSelected();
-    }
-
-    public boolean turnOnSetUnion() {
-        return prettySetUnionCheckBox.isSelected();
-    }
-
-    public boolean turnOnSetDifference() {
-        return prettySetDifferenceCheckBox.isSelected();
-    }
-
-    public boolean turnOnSetIntersection() {
-        return prettySetIntersectionCheckBox.isSelected();
-    }
-
-    public boolean turnOnThreadFirst() {
-        return prettyThreadFirstCheckBox.isSelected();
-    }
-
-    public boolean turnOnThreadLast() {
-        return prettyThreadLastCheckBox.isSelected();
     }
 
     public boolean isModified() {

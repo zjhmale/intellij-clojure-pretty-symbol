@@ -22,21 +22,21 @@ class CPSConfigurable : Configurable {
     override fun apply() {
         val settings = CPSSettings.getInstance()
 
-        settings.turnOnDef = settingsForm?.turnOnDef() ?: true
-        settings.turnOnDefn = settingsForm?.turnOnDefn() ?: true
-        settings.turnOnFn = settingsForm?.turnOnFn() ?: true
-        settings.turnOnLambda = settingsForm?.turnOnLambda() ?: true
-        settings.turnOnNotEqual = settingsForm?.turnOnNotEqual() ?: true
-        settings.turnOnGT = settingsForm?.turnOnGT() ?: true
-        settings.turnOnLT = settingsForm?.turnOnLT() ?: true
-        settings.turnOnPartial = settingsForm?.turnOnPartial() ?: true
-        settings.turnOnSet = settingsForm?.turnOnSet() ?: true
-        settings.turnOnEmptySet = settingsForm?.turnOnEmptySet() ?: true
-        settings.turnOnSetUnion = settingsForm?.turnOnSetUnion() ?: true
-        settings.turnOnSetDifference = settingsForm?.turnOnSetDifference() ?: true
-        settings.turnOnSetIntersection = settingsForm?.turnOnSetIntersection() ?: true
-        settings.turnOnThreadFirst = settingsForm?.turnOnThreadFirst() ?: true
-        settings.turnOnThreadLast = settingsForm?.turnOnThreadLast() ?: true
+        settings.turnOnDef = settingsForm?.prettyDefCheckBox?.isSelected ?: true
+        settings.turnOnDefn = settingsForm?.prettyDefnCheckBox?.isSelected ?: true
+        settings.turnOnFn = settingsForm?.prettyFnCheckBox?.isSelected ?: true
+        settings.turnOnLambda = settingsForm?.prettyLambdaCheckBox?.isSelected ?: true
+        settings.turnOnNotEqual = settingsForm?.prettyNotEqualCheckBox?.isSelected ?: true
+        settings.turnOnGT = settingsForm?.prettyGTCheckBox?.isSelected ?: true
+        settings.turnOnLT = settingsForm?.prettyLTCheckBox?.isSelected ?: true
+        settings.turnOnPartial = settingsForm?.prettyPartialCheckBox?.isSelected ?: true
+        settings.turnOnSet = settingsForm?.prettySetCheckBox?.isSelected ?: true
+        settings.turnOnEmptySet = settingsForm?.prettyEmptySetCheckBox?.isSelected ?: true
+        settings.turnOnSetUnion = settingsForm?.prettySetCheckBox?.isSelected ?: true
+        settings.turnOnSetDifference = settingsForm?.prettySetDifferenceCheckBox?.isSelected ?: true
+        settings.turnOnSetIntersection = settingsForm?.prettySetIntersectionCheckBox?.isSelected ?: true
+        settings.turnOnThreadFirst = settingsForm?.prettyThreadFirstCheckBox?.isSelected ?: true
+        settings.turnOnThreadLast = settingsForm?.prettyThreadLastCheckBox?.isSelected ?: true
     }
 
     override fun reset() {
