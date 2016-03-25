@@ -13,15 +13,25 @@ import java.util.regex.Pattern
  * Created by zjh on 16/3/22.
  */
 class CPSFoldingBuilder : FoldingBuilder {
-    private val symbolPattern = Pattern.compile("\\(fn|\\(partial|\\(->|\\(def|not=|>=|<=|#\\(|#\\{|union|difference|intersection")
+    private val symbolPattern = Pattern.compile(
+            "\\(fn|\\(let|\\(partial|\\(->|\\(def|\\(doseq|\\(comp|not=|and|or|not|>=|<=|#\\(|#\\{|union|difference|intersection"
+    )
+
     private val prettySymbolMaps = hashMapOf(
             "(fn" to "λ",
+            "(let" to "┝",
+            "(letfn" to "λ",
             "(partial" to "Ƥ",
             "(def" to "≡",
             "(defn" to "ƒ",
+            "(doseq" to "",
+            "(comp" to "∘",
             "(->" to "→",
             "(->>" to "⇉",
             "not=" to "≠",
+            "and" to "∧",
+            "or" to "∨",
+            "not" to "¬",
             ">=" to "≥",
             "<=" to "≤",
             "#(" to "λ(",
@@ -112,6 +122,17 @@ class CPSFoldingBuilder : FoldingBuilder {
                             settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart, GT)
                         } else if (nextChar == " ") {
                             settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart, GT)
+                        } else {
+                            false
+                        }
+                    } else if (key == "(let") {
+                        val nextTwoChars = text.substring(rangeEnd, rangeEnd + 2)
+                        if (nextTwoChars == "fn") {
+                            key = "(letfn"
+                            rangeEnd += 2
+                            settings.turnOnLetfn && isDelimiterMatch(text, rangeStart, GT)
+                        } else if (nextChar == " ") {
+                            settings.turnOnLet && isDelimiterMatch(text, rangeStart, GT)
                         } else {
                             false
                         }

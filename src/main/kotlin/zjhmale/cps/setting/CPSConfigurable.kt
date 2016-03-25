@@ -25,6 +25,8 @@ class CPSConfigurable : Configurable {
         settings.turnOnDef = settingsForm?.prettyDefCheckBox?.isSelected ?: true
         settings.turnOnDefn = settingsForm?.prettyDefnCheckBox?.isSelected ?: true
         settings.turnOnFn = settingsForm?.prettyFnCheckBox?.isSelected ?: true
+        settings.turnOnLet = settingsForm?.prettyLetCheckBox?.isSelected ?: true
+        settings.turnOnLetfn = settingsForm?.prettyLetfnCheckBox?.isSelected ?: true
         settings.turnOnLambda = settingsForm?.prettyLambdaCheckBox?.isSelected ?: true
         settings.turnOnNotEqual = settingsForm?.prettyNotEqualCheckBox?.isSelected ?: true
         settings.turnOnGT = settingsForm?.prettyGTCheckBox?.isSelected ?: true
