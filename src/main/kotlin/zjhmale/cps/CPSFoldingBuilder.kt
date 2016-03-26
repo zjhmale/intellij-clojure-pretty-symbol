@@ -119,7 +119,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                     } else if (key == "(fn") {
                         settings.turnOnFn && isDelimiterMatch(text, rangeStart, GE)
                     } else if (key == "(partial") {
-                        settings.turnOnPartial
+                        settings.turnOnPartial && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "(->") {
                         if (nextChar == ">") {
                             key = "(->>"
