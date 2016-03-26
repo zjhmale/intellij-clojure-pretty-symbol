@@ -117,7 +117,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                         }
 
                     } else if (key == "(fn") {
-                        settings.turnOnFn
+                        settings.turnOnFn && isDelimiterMatch(text, rangeStart, GE)
                     } else if (key == "(partial") {
                         settings.turnOnPartial
                     } else if (key == "(->") {
@@ -172,7 +172,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                         }
                     } else if (setOperators.contains(key)) {
                         val leftStopPos = findLeftStopPos(text, rangeStart)
-                        if (leftStopPos != -1 && leftStopFlags.contains(prevChar)) {
+                        if (leftStopPos != -1 && leftStopFlags.contains(prevChar) && isDelimiterMatch(text, rangeStart, GT)) {
                             rangeStart = leftStopPos + 1
                             if (nextChar == " " || nextChar == "]") {
                                 if (key == "union") {
