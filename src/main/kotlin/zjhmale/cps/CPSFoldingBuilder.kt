@@ -17,6 +17,10 @@ class CPSFoldingBuilder : FoldingBuilder {
             "\\(fn|\\(let|\\(partial|\\(->|\\(def|\\(doseq|\\(comp|not=|and|or|not|>=|<=|#\\(|#\\{|union|difference|intersection"
     )
 
+    private val stringLiteralPattern = Pattern.compile(
+            "\".*?\""
+    )
+
     private val prettySymbolMaps = hashMapOf(
             "(fn" to "λ",
             "(let" to "⊢",
@@ -83,6 +87,16 @@ class CPSFoldingBuilder : FoldingBuilder {
 
     private val logicSymbolPredicate = { text: String, rangeStart: Int, prevChar: String, nextChar: String ->
         ((prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || prevChar == " ") && arrayOf(")", " ", "\n").contains(nextChar)
+    }
+
+    val isSymbolInStringLiteral = { text: String, rangeStart: Int, rangeEnd: Int ->
+        val matcher = stringLiteralPattern.matcher(text.replace("\n", " "))
+        var isInStringLiteral = false
+        while (matcher.find()) {
+            isInStringLiteral = matcher.start() <= rangeStart && rangeEnd <= matcher.end()
+            if (isInStringLiteral) break
+        }
+        isInStringLiteral
     }
 
     override fun buildFoldRegions(node: ASTNode, document: Document): Array<out FoldingDescriptor> {
@@ -195,7 +209,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                             false
                         }
 
-                if (shouldFold) {
+                if ((!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral) && shouldFold) {
                     val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
                     val range = TextRange.create(rangeStart, rangeEnd)
                     descriptors.add(CPSFoldingDescriptor(node, range, null, pretty, true))

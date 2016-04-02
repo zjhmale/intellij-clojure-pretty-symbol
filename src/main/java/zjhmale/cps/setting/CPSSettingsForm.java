@@ -6,7 +6,8 @@ import javax.swing.*;
  * Created by zjh on 16/2/27.
  */
 public class CPSSettingsForm {
-    private JPanel appearancePanel;
+    private JPanel concealSettingsPanel;
+    private JPanel generalSettingsPanel;
     private JPanel panel;
 
     public JCheckBox prettyDefCheckBox;
@@ -31,6 +32,7 @@ public class CPSSettingsForm {
     public JCheckBox prettyAndCheckBox;
     public JCheckBox prettyOrCheckBox;
     public JCheckBox prettyNotCheckBox;
+    public JCheckBox showUpInStringLiteralCheckBox;
 
     private final CPSSettings settings;
 
@@ -64,7 +66,8 @@ public class CPSSettingsForm {
                 || prettySetDifferenceCheckBox.isSelected() != settings.turnOnSetDifference
                 || prettySetIntersectionCheckBox.isSelected() != settings.turnOnSetIntersection
                 || prettyThreadFirstCheckBox.isSelected() != settings.turnOnThreadFirst
-                || prettyThreadLastCheckBox.isSelected() != settings.turnOnThreadLast;
+                || prettyThreadLastCheckBox.isSelected() != settings.turnOnThreadLast
+                || showUpInStringLiteralCheckBox.isSelected() != settings.showUpInStringLiteral;
     }
 
     public void reset() {
@@ -90,5 +93,6 @@ public class CPSSettingsForm {
         prettySetIntersectionCheckBox.setSelected(settings.turnOnSetIntersection);
         prettyThreadFirstCheckBox.setSelected(settings.turnOnThreadFirst);
         prettyThreadLastCheckBox.setSelected(settings.turnOnThreadLast);
+        showUpInStringLiteralCheckBox.setSelected(settings.showUpInStringLiteral);
     }
 }

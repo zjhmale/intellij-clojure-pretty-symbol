@@ -44,6 +44,7 @@ class CPSConfigurable : Configurable {
         settings.turnOnSetIntersection = settingsForm?.prettySetIntersectionCheckBox?.isSelected ?: true
         settings.turnOnThreadFirst = settingsForm?.prettyThreadFirstCheckBox?.isSelected ?: true
         settings.turnOnThreadLast = settingsForm?.prettyThreadLastCheckBox?.isSelected ?: true
+        settings.showUpInStringLiteral = settingsForm?.showUpInStringLiteralCheckBox?.isSelected ?: false
     }
 
     override fun reset() {
