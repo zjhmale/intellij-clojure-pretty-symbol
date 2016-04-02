@@ -8,8 +8,9 @@ https://plugins.jetbrains.com/plugin/8224
 
 ## Shortcuts
 
+* ⌘- (Collapse)
+* ⌘+ (Expand)
 * ⇧⌘- (Collapse All)
-
 * ⇧⌘+ (Expand All)
 
 ## Configuration
