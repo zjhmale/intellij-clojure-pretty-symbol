@@ -82,7 +82,7 @@ class CPSFoldingBuilder : FoldingBuilder {
     }
 
     private val logicSymbolPredicate = { text: String, rangeStart: Int, prevChar: String, nextChar: String ->
-        (prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || (prevChar == " " && arrayOf(")", " ", "\n").contains(nextChar))
+        ((prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || prevChar == " ") && arrayOf(")", " ", "\n").contains(nextChar)
     }
 
     override fun buildFoldRegions(node: ASTNode, document: Document): Array<out FoldingDescriptor> {
