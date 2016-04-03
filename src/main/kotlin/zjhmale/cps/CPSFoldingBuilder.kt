@@ -114,91 +114,88 @@ class CPSFoldingBuilder : FoldingBuilder {
                 rangeStart += 1
             }
 
-            if (rangeStart > nodeRange.startOffset && rangeEnd < nodeRange.endOffset) {
-                val nextChar = text.substring(rangeEnd, rangeEnd + 1)
-                val nextTwoChars = text.substring(rangeEnd, rangeEnd + 2)
-                val prevChar = text.substring(rangeStart - 1, rangeStart)
+            if (rangeEnd + 1 > text.length || rangeEnd + 2 > text.length) continue
+            val nextChar = text.substring(rangeEnd, rangeEnd + 1)
+            val nextTwoChars = text.substring(rangeEnd, rangeEnd + 2)
+            val prevChar = text.substring(rangeStart - 1, rangeStart)
 
-                val shouldFold =
-                        if (key == "(def") {
-                            if (nextChar == " ") {
-                                settings.turnOnDef && isDelimiterMatch(text, rangeStart, GE)
-                            } else if (nextChar == "n") {
-                                key = "(defn"
-                                rangeEnd += 1
-                                settings.turnOnDefn
-                            } else {
-                                false
-                            }
+            val shouldFold =
+                    if (key == "(def") {
+                        if (nextChar == " ") {
+                            settings.turnOnDef && isDelimiterMatch(text, rangeStart, GE)
+                        } else if (nextChar == "n") {
+                            key = "(defn"
+                            rangeEnd += 1
+                            settings.turnOnDefn
+                        } else {
+                            false
+                        }
 
-                        } else if (key == "(fn") {
-                            settings.turnOnFn && isDelimiterMatch(text, rangeStart, GE)
-                        } else if (key == "(partial") {
-                            settings.turnOnPartial && isDelimiterMatch(text, rangeStart, GT)
-                        } else if (key == "(->") {
-                            if (nextChar == ">") {
-                                key = "(->>"
-                                rangeEnd += 1
-                                settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart, GT)
-                            } else if (nextChar == " ") {
-                                settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart, GT)
-                            } else {
-                                false
-                            }
-                        } else if (key == "(let") {
-                            if (nextTwoChars == "fn") {
-                                key = "(letfn"
-                                rangeEnd += 2
-                                settings.turnOnLetfn && isDelimiterMatch(text, rangeStart, GE)
-                            } else if (nextChar == " ") {
-                                settings.turnOnLet && isDelimiterMatch(text, rangeStart, GE)
-                            } else {
-                                false
-                            }
-                        } else if (key == "(doseq") {
-                            nextTwoChars == " [" && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
-                        } else if (key == "(comp") {
-                            nextChar == " " && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
-                        } else if (key == "not=") {
-                            settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
-                        } else if (key == ">=") {
-                            if (prevChar == ">") {
-                                false
-                            } else {
-                                settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT)
-                            }
-                        } else if (key == "<=") {
-                            settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT)
-                        } else if (key == "and") {
-                            settings.turnOnAnd && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
-                        } else if (key == "or") {
-                            settings.turnOnOr && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
-                        } else if (key == "not") {
-                            settings.turnOnNot && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
-                        } else if (key == "#(") {
-                            settings.turnOnLambda
-                        } else if (key == "#{") {
-                            if (nextChar == "}") {
-                                key = "#{}"
-                                rangeEnd += 1
-                                settings.turnOnEmptySet
-                            } else {
-                                settings.turnOnSet
-                            }
-                        } else if (setOperators.contains(key)) {
-                            val leftStopPos = findLeftStopPos(text, rangeStart)
-                            if (leftStopPos != -1 && leftStopFlags.contains(prevChar) && isDelimiterMatch(text, rangeStart, GT)) {
-                                rangeStart = leftStopPos + 1
-                                if (nextChar == " " || nextChar == "]") {
-                                    if (key == "union") {
-                                        settings.turnOnSetUnion
-                                    } else if (key == "difference") {
-                                        settings.turnOnSetDifference
-                                    } else if (key == "intersection") {
-                                        settings.turnOnSetIntersection
-                                    } else {
-                                        false
-                                    }
+                    } else if (key == "(fn") {
+                        settings.turnOnFn && isDelimiterMatch(text, rangeStart, GE)
+                    } else if (key == "(partial") {
+                        settings.turnOnPartial && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == "(->") {
+                        if (nextChar == ">") {
+                            key = "(->>"
+                            rangeEnd += 1
+                            settings.turnOnThreadLast && isDelimiterMatch(text, rangeStart, GT)
+                        } else if (nextChar == " ") {
+                            settings.turnOnThreadFirst && isDelimiterMatch(text, rangeStart, GT)
+                        } else {
+                            false
+                        }
+                    } else if (key == "(let") {
+                        if (nextTwoChars == "fn") {
+                            key = "(letfn"
+                            rangeEnd += 2
+                            settings.turnOnLetfn && isDelimiterMatch(text, rangeStart, GE)
+                        } else if (nextChar == " ") {
+                            settings.turnOnLet && isDelimiterMatch(text, rangeStart, GE)
+                        } else {
+                            false
+                        }
+                    } else if (key == "(doseq") {
+                        nextTwoChars == " [" && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
+                    } else if (key == "(comp") {
+                        nextChar == " " && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == "not=") {
+                        settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == ">=") {
+                        if (prevChar == ">") {
+                            false
+                        } else {
+                            settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT)
+                        }
+                    } else if (key == "<=") {
+                        settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == "and") {
+                        settings.turnOnAnd && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "or") {
+                        settings.turnOnOr && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "not") {
+                        settings.turnOnNot && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "#(") {
+                        settings.turnOnLambda
+                    } else if (key == "#{") {
+                        if (nextChar == "}") {
+                            key = "#{}"
+                            rangeEnd += 1
+                            settings.turnOnEmptySet
+                        } else {
+                            settings.turnOnSet
+                        }
+                    } else if (setOperators.contains(key)) {
+                        val leftStopPos = findLeftStopPos(text, rangeStart)
+                        if (leftStopPos != -1 && leftStopFlags.contains(prevChar) && isDelimiterMatch(text, rangeStart, GT)) {
+                            rangeStart = leftStopPos + 1
+                            if (nextChar == " " || nextChar == "]") {
+                                if (key == "union") {
+                                    settings.turnOnSetUnion
+                                } else if (key == "difference") {
+                                    settings.turnOnSetDifference
+                                } else if (key == "intersection") {
+                                    settings.turnOnSetIntersection
                                 } else {
                                     false
                                 }
@@ -208,12 +205,14 @@ class CPSFoldingBuilder : FoldingBuilder {
                         } else {
                             false
                         }
+                    } else {
+                        false
+                    }
 
-                if ((!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral) && shouldFold) {
-                    val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
-                    val range = TextRange.create(rangeStart, rangeEnd)
-                    descriptors.add(CPSFoldingDescriptor(node, range, null, pretty, true))
-                }
+            if ((!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral) && shouldFold) {
+                val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
+                val range = TextRange.create(rangeStart, rangeEnd)
+                descriptors.add(CPSFoldingDescriptor(node, range, null, pretty, true))
             }
         }
         return descriptors.toArray<FoldingDescriptor>(arrayOfNulls<FoldingDescriptor>(descriptors.size))
