@@ -158,7 +158,7 @@ class CPSFoldingBuilder : FoldingBuilder {
                     } else if (key == "(doseq") {
                         nextTwoChars == " [" && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
                     } else if (key == "(comp") {
-                        nextChar == " " && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GT)
+                        nextChar == " " && settings.turnOnComp && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "not=") {
                         settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == ">=") {
