@@ -8,6 +8,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.5.1:</p>
+      <ul>
+        <li>Fix comp symbol not showing up bug</li>
+      </ul>
       <p>1.5:</p>
       <ul>
         <li>Fix not-xxx symbols bug</li>
