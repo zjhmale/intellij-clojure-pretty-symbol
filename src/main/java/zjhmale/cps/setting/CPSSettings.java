@@ -38,6 +38,7 @@ public class CPSSettings implements PersistentStateComponent<CPSSettings> {
     public boolean turnOnSetDifference = true;
     public boolean turnOnSetIntersection = true;
     public boolean showUpInStringLiteral = false;
+    public boolean globalTurnOn = true;
 
     @Nullable
     @Override

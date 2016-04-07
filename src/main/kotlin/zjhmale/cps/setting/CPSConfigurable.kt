@@ -45,6 +45,7 @@ class CPSConfigurable : Configurable {
         settings.turnOnThreadFirst = settingsForm?.prettyThreadFirstCheckBox?.isSelected ?: true
         settings.turnOnThreadLast = settingsForm?.prettyThreadLastCheckBox?.isSelected ?: true
         settings.showUpInStringLiteral = settingsForm?.showUpInStringLiteralCheckBox?.isSelected ?: false
+        settings.globalTurnOn = settingsForm?.globalTurnOnCheckBox?.isSelected ?: true
     }
 
     override fun reset() {

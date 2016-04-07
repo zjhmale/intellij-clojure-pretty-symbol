@@ -33,6 +33,7 @@ public class CPSSettingsForm {
     public JCheckBox prettyOrCheckBox;
     public JCheckBox prettyNotCheckBox;
     public JCheckBox showUpInStringLiteralCheckBox;
+    public JCheckBox globalTurnOnCheckBox;
 
     private final CPSSettings settings;
 
@@ -67,7 +68,8 @@ public class CPSSettingsForm {
                 || prettySetIntersectionCheckBox.isSelected() != settings.turnOnSetIntersection
                 || prettyThreadFirstCheckBox.isSelected() != settings.turnOnThreadFirst
                 || prettyThreadLastCheckBox.isSelected() != settings.turnOnThreadLast
-                || showUpInStringLiteralCheckBox.isSelected() != settings.showUpInStringLiteral;
+                || showUpInStringLiteralCheckBox.isSelected() != settings.showUpInStringLiteral
+                || globalTurnOnCheckBox.isSelected() != settings.globalTurnOn;
     }
 
     public void reset() {
@@ -94,5 +96,6 @@ public class CPSSettingsForm {
         prettyThreadFirstCheckBox.setSelected(settings.turnOnThreadFirst);
         prettyThreadLastCheckBox.setSelected(settings.turnOnThreadLast);
         showUpInStringLiteralCheckBox.setSelected(settings.showUpInStringLiteral);
+        globalTurnOnCheckBox.setSelected(settings.globalTurnOn);
     }
 }

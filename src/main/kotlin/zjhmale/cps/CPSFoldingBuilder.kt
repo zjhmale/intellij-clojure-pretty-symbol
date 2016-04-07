@@ -209,7 +209,9 @@ class CPSFoldingBuilder : FoldingBuilder {
                         false
                     }
 
-            if ((!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral) && shouldFold) {
+            if (settings.globalTurnOn
+                    && (!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral)
+                    && shouldFold) {
                 val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
                 val range = TextRange.create(rangeStart, rangeEnd)
                 descriptors.add(CPSFoldingDescriptor(node, range, null, pretty, true))
