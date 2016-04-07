@@ -8,6 +8,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.5.3:</p>
+      <ul>
+        <li>Support turn on / off pretty symbols globally</li>
+      </ul>
       <p>1.5.1:</p>
       <ul>
         <li>Fix comp symbol not showing up bug</li>
