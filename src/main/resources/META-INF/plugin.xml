@@ -8,6 +8,11 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.6:</p>
+      <ul>
+        <li>Refresh current file after applied settings</li>
+        <li>Add action to toggle conceal globally</li>
+      </ul>
       <p>1.5.3:</p>
       <ul>
         <li>Support turn on / off pretty symbols globally</li>
