@@ -23,7 +23,7 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/settings.png)
 
-* after you click `apply` button, every change on settings will apply to the current file.
+* after you click `apply` button, every change on settings panel will be applied to the current file.
 
 ![](./pics/apply.gif)
 
@@ -33,7 +33,7 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/toggle.gif)
 
-* you can just click `Edit > Toggle Clojure Pretty Symbol` button on the menu, or add a shortcut from the keymap.
+* you can just click `Edit > Toggle Clojure Pretty Symbol` button on the menu, or bind a shortcut from the keymap.
 
 ![](./pics/keymap.png)
 
