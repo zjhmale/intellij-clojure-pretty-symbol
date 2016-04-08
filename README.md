@@ -23,6 +23,20 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/settings.png)
 
+* after you click `apply` button, every change on settings will apply to the current file.
+
+![](./pics/apply.gif)
+
+## Actions
+
+* `Toggle Clojure Pretty Symbol` action will turn on / off pretty symbols globally.
+
+![](./pics/toggle.gif)
+
+* you can just click `Edit > Toggle Clojure Pretty Symbol` button on the menu, or add a shortcut from the keymap.
+
+![](./pics/keymap.png)
+
 ## Development
 
 * `./gradlew runIdea`
