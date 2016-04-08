@@ -1,10 +1,9 @@
 package zjhmale.cps.setting
 
-import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.options.ConfigurationException
-import com.intellij.openapi.project.ProjectManager
 import org.jetbrains.annotations.Nls
+import zjhmale.cps.Util
 import javax.swing.JComponent
 
 /**

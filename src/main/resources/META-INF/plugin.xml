@@ -82,7 +82,12 @@
   </project-components>
 
   <actions>
-    <!-- Add your actions here -->
+    <action class="zjhmale.cps.actions.GlobalToggleConcealAction"
+            id="CPS.actions.GlobalToggleConceal"
+            text="Toggle Clojure Pretty Symbol"
+            description="Toggle Clojure Pretty Symbol Globally">
+      <add-to-group group-id="EditMenu" anchor="last"/>
+    </action>
   </actions>
 
 </idea-plugin>

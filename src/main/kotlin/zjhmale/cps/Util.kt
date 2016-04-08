@@ -1,4 +1,4 @@
-package zjhmale.cps.setting
+package zjhmale.cps
 
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.ProjectManager
