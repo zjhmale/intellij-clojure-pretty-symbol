@@ -1,7 +1,9 @@
 package zjhmale.cps.setting
 
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.options.ConfigurationException
+import com.intellij.openapi.project.ProjectManager
 import org.jetbrains.annotations.Nls
 import javax.swing.JComponent
 
@@ -46,6 +48,8 @@ class CPSConfigurable : Configurable {
         settings.turnOnThreadLast = settingsForm?.prettyThreadLastCheckBox?.isSelected ?: true
         settings.showUpInStringLiteral = settingsForm?.showUpInStringLiteralCheckBox?.isSelected ?: false
         settings.globalTurnOn = settingsForm?.globalTurnOnCheckBox?.isSelected ?: true
+
+        Util.reopenCurrentFile()
     }
 
     override fun reset() {
