@@ -1,14 +1,17 @@
 package zjhmale.cps
 
+import com.intellij.ide.DataManager
+import com.intellij.openapi.actionSystem.DataKeys
 import com.intellij.openapi.fileEditor.FileEditorManager
-import com.intellij.openapi.project.ProjectManager
 
 /**
  * Created by zjh on 16/4/8.
  */
 object Util {
     fun reopenCurrentFile() {
-        val project = ProjectManager.getInstance().openProjects[0]
+        val dataContext = DataManager.getInstance().getDataContext()
+        val project = DataKeys.PROJECT.getData(dataContext) ?: return
+
         val manager = FileEditorManager.getInstance(project)
         val files = manager.selectedFiles
         for (file in files) {
