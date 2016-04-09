@@ -13,9 +13,13 @@ object Util {
         val project = DataKeys.PROJECT.getData(dataContext) ?: return
 
         val manager = FileEditorManager.getInstance(project)
-        val files = manager.selectedFiles
-        for (file in files) {
+        val selectedfiles = manager.selectedFiles
+        val openFiles = manager.openFiles
+        for (file in openFiles) {
             manager.closeFile(file)
+            manager.openFile(file, false)
+        }
+        for (file in selectedfiles) {
             manager.openFile(file, true)
         }
     }
