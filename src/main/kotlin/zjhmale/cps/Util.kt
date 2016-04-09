@@ -9,7 +9,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager
  */
 object Util {
     fun reopenCurrentFile() {
-        val dataContext = DataManager.getInstance().getDataContext()
+        val dataContext = DataManager.getInstance().dataContext
         val project = DataKeys.PROJECT.getData(dataContext) ?: return
 
         val manager = FileEditorManager.getInstance(project)

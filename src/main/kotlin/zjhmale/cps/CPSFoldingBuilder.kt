@@ -89,7 +89,7 @@ class CPSFoldingBuilder : FoldingBuilder {
         ((prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || prevChar == " ") && arrayOf(")", " ", "\n").contains(nextChar)
     }
 
-    val isSymbolInStringLiteral = { text: String, rangeStart: Int, rangeEnd: Int ->
+    private val isSymbolInStringLiteral = { text: String, rangeStart: Int, rangeEnd: Int ->
         val matcher = stringLiteralPattern.matcher(text.replace("\n", " "))
         var isInStringLiteral = false
         while (matcher.find()) {
@@ -97,6 +97,32 @@ class CPSFoldingBuilder : FoldingBuilder {
             if (isInStringLiteral) break
         }
         isInStringLiteral
+    }
+
+    private fun isSymbolInComment(node: ASTNode, rangeStart: Int, rangeEnd: Int): Boolean {
+        var isInComment = false
+
+        if (node.text.startsWith(";")) {
+            println("a comment")
+            println(node.text)
+            println("start ${node.textRange.startOffset}")
+            println("end ${node.textRange.endOffset}")
+            isInComment = node.textRange.startOffset <= rangeStart && rangeEnd <= node.textRange.endOffset
+        }
+        val e = node.psi
+        if (e.javaClass.toString() == "class cursive.psi.impl.ClSexpComment" && e.text.startsWith("#_")) {
+            println("next form")
+            println(node.text)
+            println("start ${node.textRange.startOffset}")
+            println("end ${node.textRange.endOffset}")
+            isInComment = node.textRange.startOffset <= rangeStart && rangeEnd <= node.textRange.endOffset
+        }
+
+        if (isInComment) return true
+        for (child in node.getChildren(null)) {
+            if (isSymbolInComment(child, rangeStart, rangeEnd)) return true
+        }
+        return false
     }
 
     override fun buildFoldRegions(node: ASTNode, document: Document): Array<out FoldingDescriptor> {
@@ -208,6 +234,8 @@ class CPSFoldingBuilder : FoldingBuilder {
                     } else {
                         false
                     }
+
+            println("is in comment ${isSymbolInComment(node, rangeStart, rangeEnd)}")
 
             if (settings.globalTurnOn
                     && (!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral)
