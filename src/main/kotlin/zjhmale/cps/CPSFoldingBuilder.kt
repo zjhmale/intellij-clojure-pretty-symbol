@@ -235,10 +235,9 @@ class CPSFoldingBuilder : FoldingBuilder {
                         false
                     }
 
-            println("is in comment ${isSymbolInComment(node, rangeStart, rangeEnd)}")
-
             if (settings.globalTurnOn
-                    && (!isSymbolInStringLiteral(text, rangeStart, rangeEnd) || settings.showUpInStringLiteral)
+                    && !(isSymbolInComment(node, rangeStart, rangeEnd) && !settings.showUpInComment)
+                    && !(isSymbolInStringLiteral(text, rangeStart, rangeEnd) && !settings.showUpInStringLiteral)
                     && shouldFold) {
                 val pretty = prettySymbolMaps[key] ?: return arrayOf<FoldingDescriptor>()
                 val range = TextRange.create(rangeStart, rangeEnd)
