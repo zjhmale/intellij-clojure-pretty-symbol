@@ -23,7 +23,7 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/settings.png)
 
-* after you click `apply` button, every change on settings panel will be applied to the current file.
+* after you click `apply` button, every change on settings panel will be applied to all open files in current editor.
 
 ![](./pics/apply.gif)
 
