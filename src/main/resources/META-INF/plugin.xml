@@ -8,6 +8,11 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.6.3:</p>
+      <ul>
+        <li>Apply toggle action to all open files and garantee the order of tabs</li>
+        <li>Make show up pretty symbols in comment configurable</li>
+      </ul>
       <p>1.6:</p>
       <ul>
         <li>Refresh current file after applied settings</li>
