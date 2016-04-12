@@ -191,10 +191,10 @@ class CPSFoldingBuilder : FoldingBuilder {
                         if (prevChar == ">") {
                             false
                         } else {
-                            settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT)
+                            settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT) && nextChar == " "
                         }
                     } else if (key == "<=") {
-                        settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT)
+                        settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT) && nextChar == " "
                     } else if (key == "and") {
                         settings.turnOnAnd && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "or") {
