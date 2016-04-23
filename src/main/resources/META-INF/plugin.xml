@@ -8,6 +8,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <p>1.6.9:</p>
+      <ul>
+        <li>Add non macro symbol constraints</li>
+      </ul>
       <p>1.6.6:</p>
       <ul>
         <li>Add more LT GT constraints</li>

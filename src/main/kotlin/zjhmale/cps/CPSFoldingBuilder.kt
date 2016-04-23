@@ -14,7 +14,7 @@ import java.util.regex.Pattern
  */
 class CPSFoldingBuilder : FoldingBuilder {
     private val symbolPattern = Pattern.compile(
-            "\\(fn|\\(let|\\(partial|\\(->|\\(def|\\(doseq|\\(comp|not=|and|or|not|>=|<=|#\\(|#\\{|union|difference|intersection"
+            "\\(fn|\\(let|\\(->|\\(def|\\(doseq|partial|comp|not=|and|or|not|>=|<=|#\\(|#\\{|union|difference|intersection"
     )
 
     private val stringLiteralPattern = Pattern.compile(
@@ -25,13 +25,13 @@ class CPSFoldingBuilder : FoldingBuilder {
             "(fn" to "λ",
             "(let" to "⊢",
             "(letfn" to "λ",
-            "(partial" to "Ƥ",
             "(def" to "≡",
             "(defn" to "ƒ",
             "(doseq" to "∀",
-            "(comp" to "∘",
             "(->" to "→",
             "(->>" to "⇉",
+            "partial" to "Ƥ",
+            "comp" to "∘",
             "not=" to "≠",
             "and" to "∧",
             "or" to "∨",
@@ -85,7 +85,7 @@ class CPSFoldingBuilder : FoldingBuilder {
         }
     }
 
-    private val logicSymbolPredicate = { text: String, rangeStart: Int, prevChar: String, nextChar: String ->
+    private val notMacroSymbolPredicate = { text: String, rangeStart: Int, prevChar: String, nextChar: String ->
         ((prevChar == "(" && isDelimiterMatch(text, rangeStart, GT)) || prevChar == " ") && arrayOf(")", " ", "\n").contains(nextChar)
     }
 
@@ -159,8 +159,6 @@ class CPSFoldingBuilder : FoldingBuilder {
 
                     } else if (key == "(fn") {
                         settings.turnOnFn && isDelimiterMatch(text, rangeStart, GE)
-                    } else if (key == "(partial") {
-                        settings.turnOnPartial && isDelimiterMatch(text, rangeStart, GT)
                     } else if (key == "(->") {
                         if (nextChar == ">") {
                             key = "(->>"
@@ -183,24 +181,22 @@ class CPSFoldingBuilder : FoldingBuilder {
                         }
                     } else if (key == "(doseq") {
                         nextTwoChars == " [" && settings.turnOnDoseq && isDelimiterMatch(text, rangeStart, GE)
-                    } else if (key == "(comp") {
-                        nextChar == " " && settings.turnOnComp && isDelimiterMatch(text, rangeStart, GT)
+                    } else if (key == "partial") {
+                        settings.turnOnPartial && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                    } else if (key == "comp") {
+                        settings.turnOnComp && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "not=") {
-                        settings.turnOnNotEqual && isDelimiterMatch(text, rangeStart, GT)
+                        settings.turnOnNotEqual && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == ">=") {
-                        if (prevChar == ">") {
-                            false
-                        } else {
-                            settings.turnOnGT && isDelimiterMatch(text, rangeStart, GT) && nextChar == " "
-                        }
+                        settings.turnOnGT && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "<=") {
-                        settings.turnOnLT && isDelimiterMatch(text, rangeStart, GT) && nextChar == " "
+                        settings.turnOnLT && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "and") {
-                        settings.turnOnAnd && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                        settings.turnOnAnd && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "or") {
-                        settings.turnOnOr && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                        settings.turnOnOr && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "not") {
-                        settings.turnOnNot && logicSymbolPredicate(text, rangeStart, prevChar, nextChar)
+                        settings.turnOnNot && notMacroSymbolPredicate(text, rangeStart, prevChar, nextChar)
                     } else if (key == "#(") {
                         settings.turnOnLambda
                     } else if (key == "#{") {
