@@ -6,7 +6,7 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/snapshot.gif)
 
-## Shortcuts
+## Screenshots
 
 * ⌘- (Collapse)
 * ⌘+ (Expand)
