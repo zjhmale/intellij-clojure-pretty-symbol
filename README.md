@@ -6,12 +6,39 @@ https://plugins.jetbrains.com/plugin/8224
 
 ![](./pics/snapshot.gif)
 
-## Screenshots
+## Shortcuts
 
 * ⌘- (Collapse)
 * ⌘+ (Expand)
 * ⇧⌘- (Collapse All)
 * ⇧⌘+ (Expand All)
+
+## Avaiable pretty symbols
+
+| original | concealed |
+|---|---|
+| `def` | `≡` |
+| `defn` | `ƒ` |
+| `fn` | `λ` |
+| `letfn` | `λ` |
+| `#(...)` | `λ(...)` |
+| `let` | `⊢` |
+| `doseq` | `∀` |
+| `->` | `→` |
+| `->>` | `⇉` |
+| `partial` | `Ƥ` |
+| `comp` | `∘` |
+| `not=` | `≠` |
+| `and` | `∧` |
+| `or` | `∨` |
+| `not` | `¬` |
+| `>=` | `≥` |
+| `<=` | `≤` |
+| `#{...}` | `∈{...}` |
+| `#{}` | `∅` |
+| `union` | `⋃` |
+| `intersection` | `⋂` |
+| `difference` | `−` |
 
 ## Configuration
 
