@@ -13,7 +13,7 @@ https://plugins.jetbrains.com/plugin/8224
 * ⇧⌘- (Collapse All)
 * ⇧⌘+ (Expand All)
 
-## Avaiable pretty symbols
+## Available pretty symbols
 
 | original | concealed |
 |---|---|
@@ -42,7 +42,7 @@ https://plugins.jetbrains.com/plugin/8224
 
 ## Configuration
 
-* it's better to clear Foreground and Background color for Folded text.
+* it's better to use a clear Foreground and Background color for Folded text.
 
 ![](./pics/configfold.png)
 
